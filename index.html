@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wedding Post — Giorgia &amp; Francesco</title>
+<meta name="description" content="The Wedding Post — everything you need to know about Giorgia and Francesco's wedding. Fabriano, 10 October 2026.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Big+Shoulders+Text:wght@600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F3F1;
+    --paper-2:#E7E7E4;
+    --ink:#1A1A19;
+    --ink-soft:#5A5A57;
+    --stamp:#BE2D2D;
+    --rule:#CDCDC9;
+    --max-w:1280px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, serif;
+    font-size:18px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:var(--max-w); margin:0 auto; padding:0 2rem 4rem;}
+
+  /* ---------- Masthead ---------- */
+  .masthead{padding:1.5rem 0 0;}
+  .masthead-row{
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items:center;
+    gap:1.75rem;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--ink);
+    padding:1rem 0;
+  }
+  .masthead-side{
+    font-family:'Courier Prime',monospace; font-size:.62rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-soft); line-height:1.7;
+  }
+  .masthead-side.right{text-align:right;}
+  .title{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:900;
+    text-transform:uppercase;
+    font-size:clamp(2.4rem, 6vw, 4.4rem);
+    line-height:.9;
+    letter-spacing:-.01em;
+    margin:0;
+    text-align:center;
+    white-space:nowrap;
+    grid-column:2;
+  }
+  .rule-double{height:0; border:0; border-top:3px solid var(--ink); border-bottom:1px solid var(--ink); margin:.6rem 0 0;}
+  .tagline{
+    text-align:center;
+    font-family:'Courier Prime','Courier New',monospace;
+    font-style:italic;
+    font-size:.72rem; letter-spacing:.04em;
+    color:var(--ink-soft);
+    margin:.7rem 0 0;
+  }
+  @media (max-width:879px){
+    .masthead-row{
+      grid-template-columns:1fr 1fr;
+      grid-template-areas:
+        "l1 r1"
+        "l2 r2"
+        "divider divider"
+        "title title";
+      column-gap:.8rem; row-gap:.2rem;
+      border-top:0; padding-top:0;
+      justify-items:start;
+    }
+    .masthead-side{display:contents;}
+    .masthead-side .mh-l1{grid-area:l1; justify-self:start;}
+    .masthead-side .mh-l2{grid-area:l2; justify-self:start;}
+    .masthead-side.right .mh-l1{grid-area:r1; text-align:right; justify-self:end;}
+    .masthead-side.right .mh-l2{grid-area:r2; text-align:right; justify-self:end;}
+    .masthead-side br{display:none;}
+    .mh-l1, .mh-l2{
+      font-family:'Courier Prime',monospace; font-size:.6rem; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--ink-soft); line-height:1.5;
+    }
+    .masthead-row::before{
+      content:""; grid-area:divider;
+      display:block;
+      justify-self:stretch;
+      border-bottom:1px solid var(--ink);
+      margin:.45rem 0 .6rem;
+    }
+    .title{grid-area:title; white-space:normal; text-align:center; justify-self:stretch;}
+  }
+
+  /* ---------- Broadsheet grid ---------- */
+  .broadsheet{
+    display:grid;
+    grid-template-columns: 1.7fr 1fr 1fr;
+    gap:0;
+    margin-top:1.5rem;
+  }
+  .col{padding:0 1.4rem; min-width:0;}
+  .col:first-child{padding-left:0;}
+  .col:last-child{padding-right:0;}
+  .col + .col{border-left:1px solid var(--rule);}
+  @media (max-width:880px){
+    .broadsheet{grid-template-columns:1fr; }
+    .col{padding:0 !important; border-left:0 !important;}
+    .col + .col{border-top:3px solid var(--ink); margin-top:1.75rem; padding-top:1.75rem !important;}
+  }
+
+  .kicker{
+    display:inline-block;
+    font-family:'Courier Prime',monospace;
+    font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;
+    background:var(--ink); color:var(--paper);
+    padding:.32rem .65rem; margin:0 0 .7rem;
+  }
+  .kicker--special{background:var(--stamp); color:var(--paper-2);}
+
+  .headline--banner{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:900;
+    text-transform:uppercase;
+    font-size:clamp(2.4rem, 6vw, 4.4rem);
+    line-height:.92;
+    letter-spacing:-.01em;
+    margin:0 0 .6rem;
+  }
+  .deck{
+    font-size:1.02rem; line-height:1.55;
+    text-align:justify; hyphens:auto;
+    margin:0 0 .6rem;
+  }
+  .deck::first-letter{
+    font-family:'Big Shoulders Display',sans-serif; font-weight:900;
+    text-transform:uppercase;
+    font-size:2.8em; float:left; line-height:.78; padding:.04em .08em 0 0;
+  }
+  .byline{
+    font-family:'Courier Prime',monospace; font-style:italic;
+    font-size:.68rem; letter-spacing:.04em;
+    color:var(--ink-soft); margin:.6rem 0 0;
+  }
+  @media (max-width:600px){ .deck{text-align:left; hyphens:none;} }
+
+  .headline{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700;
+    font-size:1.32rem;
+    line-height:1.08;
+    margin:0 0 .55rem;
+  }
+  .dek{font-style:italic; color:var(--ink-soft); margin:-.3rem 0 .7rem; font-size:.95rem;}
+  .body{font-size:.95rem;}
+  .body p{margin:0 0 .65rem; text-align:justify; hyphens:auto;}
+  .body p:last-child{margin-bottom:0;}
+  @media (max-width:600px){ .body p{text-align:left; hyphens:none;} }
+
+  .article{margin-bottom:1.75rem; padding-bottom:1.75rem; border-bottom:1px solid var(--rule);}
+  .article:last-child{margin-bottom:0; padding-bottom:0; border-bottom:0;}
+
+  .pullquote{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800; font-size:1.05rem;
+    line-height:1.18; color:var(--stamp);
+    border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+    padding:.6rem 0; margin:.7rem 0;
+  }
+
+  /* ---------- Toggle ---------- */
+  .toggle{
+    font-family:'Courier Prime',monospace;
+    font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
+    background:none; border:1px solid var(--ink); color:var(--ink);
+    padding:.45rem .8rem; cursor:pointer; border-radius:0;
+    display:inline-block; text-decoration:none; margin-right:.5rem; margin-top:.2rem;
+  }
+  .toggle:hover, .toggle[aria-expanded="true"]{background:var(--ink); color:var(--paper);}
+  .toggle:focus-visible{outline:2px solid var(--stamp); outline-offset:3px;}
+
+  /* ---------- Inset / reveal panels ---------- */
+  .inset{
+    background:var(--paper-2);
+    border:1px solid var(--rule);
+    padding:.95rem 1.05rem;
+    margin-top:.9rem;
+    font-size:.92rem;
+  }
+  .inset p{margin:0 0 .65rem; text-align:justify; hyphens:auto;}
+  .inset p:last-child{margin-bottom:0;}
+  @media (max-width:600px){ .inset p{text-align:left; hyphens:none;} }
+  @keyframes revealIn{ from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+  .reveal{display:none;}
+  .reveal.is-open{display:block; animation:revealIn .35s ease;}
+  @media (prefers-reduced-motion:reduce){ .reveal.is-open{animation:none;} }
+
+  /* ---------- Stamp buttons ---------- */
+  .stamp{
+    font-family:'Big Shoulders Text', sans-serif;
+    font-weight:800; text-transform:uppercase;
+    font-size:.82rem; letter-spacing:.03em;
+    color:var(--stamp); background:transparent;
+    border:3px double var(--stamp);
+    padding:.6rem .85rem; line-height:1.25;
+    display:inline-block; cursor:pointer; text-align:left;
+    transform:rotate(-1.5deg); margin-top:.2rem;
+    transition:transform .2s ease, background .2s ease, color .2s ease;
+  }
+  .stamp:hover, .stamp[aria-expanded="true"]{
+    transform:rotate(0deg); background:var(--stamp); color:var(--paper-2);
+  }
+  .stamp:focus-visible{outline:2px solid var(--ink); outline-offset:3px;}
+  .stamp small{
+    display:block; font-family:'Courier Prime',monospace;
+    font-size:.6rem; font-weight:400; text-transform:none;
+    opacity:.85; margin-top:.3em; letter-spacing:.06em;
+  }
+
+  /* ---------- Date stamp ---------- */
+  .datestamp{
+    display:inline-flex; flex-direction:column; align-items:center; gap:.2rem;
+    border:3px double var(--stamp); color:var(--stamp);
+    padding:.7rem 1.2rem; transform:rotate(2deg); margin:.4rem 0 .9rem;
+  }
+  .datestamp .big{font-family:'Big Shoulders Text',sans-serif; font-weight:800; font-size:1.2rem; letter-spacing:.05em;}
+  .datestamp .small{font-family:'Courier Prime',monospace; font-size:.58rem; letter-spacing:.18em; text-transform:uppercase;}
+
+  .ticker{
+    font-family:'Courier Prime',monospace; font-size:.7rem;
+    color:var(--ink-soft); margin-top:.9rem; letter-spacing:.02em;
+  }
+  .ticker strong{color:var(--stamp);}
+
+  /* ---------- Hotels (own band below the grid) ---------- */
+  .hotelband{margin-top:2.5rem; padding-top:1.75rem; border-top:3px solid var(--ink);}
+  .hotels{display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:1.2rem;}
+  .hotel{padding:0 1.4rem;}
+  .hotel:first-child{padding-left:0;}
+  .hotel:last-child{padding-right:0;}
+  .hotel + .hotel{border-left:1px solid var(--rule);}
+  .hotel h3{
+    font-family:'Big Shoulders Text',sans-serif; font-weight:800; font-size:1.1rem;
+    margin:0 0 .45rem;
+  }
+  .hotel p{margin:0 0 .5rem; font-size:.95rem; text-align:justify; hyphens:auto;}
+  @media (max-width:600px){ .hotel p{text-align:left; hyphens:none;} }
+  .hotel .meta{
+    font-family:'Courier Prime',monospace; font-size:.64rem; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--ink-soft); margin:0;
+  }
+  @media (max-width:760px){
+    .hotels{grid-template-columns:1fr;}
+    .hotel{padding:0 !important;}
+    .hotel + .hotel{border-left:0; border-top:1px solid var(--rule); margin-top:1.2rem; padding-top:1.2rem !important;}
+  }
+
+  /* ---------- Footer ---------- */
+  .footer{
+    text-align:center; padding-top:2.25rem; margin-top:2.5rem; border-top:1px solid var(--rule);
+    font-family:'Courier Prime',monospace; font-size:.66rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
+    line-height:2;
+  }
+
+  /* ---------- Scroll reveal ---------- */
+  .fade-in{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .fade-in.is-visible{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion:reduce){
+    .fade-in{opacity:1; transform:none; transition:none;}
+  }
+
+  @media (max-width:480px){
+    body{font-size:16.5px;}
+    .page{padding:0 1.1rem 3rem;}
+  }
+
+  /* ---------- Password gate ---------- */
+  #site-content{display:none;}
+  .gate{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    padding:1.5rem;
+  }
+  .gate-card{
+    width:100%; max-width:380px;
+    text-align:center;
+  }
+  .gate-eyebrow{
+    font-family:'Courier Prime',monospace; font-size:.68rem;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft);
+    margin:0 0 .9rem;
+  }
+  .gate-title{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:900; text-transform:uppercase;
+    font-size:clamp(2rem, 8vw, 2.8rem);
+    line-height:.92; margin:0 0 1.4rem;
+  }
+  .gate-rule{border:0; border-top:3px solid var(--ink); border-bottom:1px solid var(--ink); height:0; margin:0 0 1.6rem;}
+  .gate-label{
+    display:block; font-family:'Courier Prime',monospace; font-size:.7rem;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft);
+    margin:0 0 .6rem;
+  }
+  .gate-input{
+    width:100%; font-family:'PT Serif', Georgia, serif; font-size:1.05rem;
+    background:var(--paper-2); border:1px solid var(--ink); color:var(--ink);
+    padding:.75rem .9rem; box-sizing:border-box; text-align:center;
+    letter-spacing:.04em;
+  }
+  .gate-input:focus{outline:2px solid var(--stamp); outline-offset:2px;}
+  .gate-submit{
+    margin-top:1rem; width:100%;
+    font-family:'Courier Prime',monospace; font-size:.78rem;
+    letter-spacing:.1em; text-transform:uppercase;
+    background:var(--ink); color:var(--paper);
+    border:1px solid var(--ink); padding:.75rem 1rem; cursor:pointer;
+  }
+  .gate-submit:hover{background:var(--stamp); border-color:var(--stamp);}
+  .gate-error{
+    font-family:'Courier Prime',monospace; font-size:.72rem; letter-spacing:.04em;
+    color:var(--stamp); margin:.9rem 0 0; min-height:1em;
+  }
+  .gate-foot{
+    font-family:'Courier Prime',monospace; font-size:.64rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-soft); margin:2rem 0 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <p class="gate-eyebrow">Edizione riservata</p>
+    <h1 class="gate-title">The<br>Wedding Post</h1>
+    <hr class="gate-rule">
+    <form id="gate-form" autocomplete="off">
+      <label class="gate-label" for="gate-password">Parola d'ordine</label>
+      <input type="password" id="gate-password" class="gate-input" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button type="submit" class="gate-submit">Entra in redazione</button>
+      <p class="gate-error" id="gate-error" aria-live="polite"></p>
+    </form>
+    <p class="gate-foot">Accesso consentito solo ai lettori invitati</p>
+  </div>
+</div>
+
+<div id="site-content">
+<div class="page">
+
+  <!-- ================= MASTHEAD ================= -->
+  <header class="masthead">
+    <div class="masthead-row">
+      <div class="masthead-side"><span class="mh-l1">Fabriano, 10 ottobre</span><br><span class="mh-l2">Cattedrale di San Venanzio</span></div>
+      <h1 class="title">The Wedding Post</h1>
+      <div class="masthead-side right"><span class="mh-l1">Edizione straordinaria</span><br><span class="mh-l2">Direzione Giorgia &amp; Francesco</span></div>
+    </div>
+    <hr class="rule-double">
+  </header>
+
+  <!-- ================= BROADSHEET GRID: COSA / CHI+QUANDO / DOVE+PERCHÉ ================= -->
+  <section class="broadsheet fade-in">
+
+    <!-- Lead column -->
+    <div class="col">
+      <p class="kicker">What</p>
+      <h2 class="headline--banner">Ci sposiamo.</h2>
+      <p class="deck">
+        Fabriano, 10 ottobre — Una notizia che corre più veloce di qualsiasi agenzia: Giorgia e Francesco si
+        sposano. La cerimonia è fissata per le ore 16:00 di sabato, nella Cattedrale di San Venanzio. Sul perché
+        di questa data, per il momento, nessun commento — ma in questa edizione speciale proviamo a fare
+        chiarezza, punto per punto, con le cinque domande che ogni buon cronista si pone: chi, cosa, dove,
+        quando, perché.
+      </p>
+      <p class="byline">— a cura della redazione (loro due)</p>
+
+      <div class="article" style="margin-top:1.6rem; border-top:1px solid var(--rule); padding-top:1.6rem;">
+        <p class="kicker kicker--special">Inserto speciale</p>
+        <h2 class="headline" style="font-size:1.3rem;">Il Marchese del Grillo</h2>
+        <p class="dek">— ovvero: dove si continua a far festa</p>
+        <div class="body">
+          <p>
+            A pochi chilometri dalla Cattedrale, tra le colline fabrianesi, si trova Villa Marchese del Grillo:
+            una residenza di campagna fatta costruire nel 1771 dal vero Onofrio del Grillo — fabrianese, nato
+            nel 1714, lo stesso a cui il celebre film con Alberto Sordi deve il nome.
+          </p>
+          <p class="pullquote">"Il marchese è sepolto proprio nella Cattedrale di San Venanzio."</p>
+          <p>
+            Per una coincidenza che a un cronista non poteva passare inosservata: la cerimonia si svolgerà a due
+            passi da lui. Sarà nei giardini secolari della sua villa che la festa continuerà, fino a tarda notte.
+          </p>
+        </div>
+        <!-- ✏️ Aggiungete indirizzo, orario di inizio e indicazioni stradali -->
+        <p class="ticker">Indirizzo e orari: <em>da confermare</em></p>
+      </div>
+    </div>
+
+    <!-- Middle column: Chi + Embargo -->
+    <div class="col">
+      <div class="article">
+        <p class="kicker">Who</p>
+        <h2 class="headline">Giorgia &amp; Francesco</h2>
+        <!-- ✏️ Personalizzate questa presentazione come volete -->
+        <div class="body">
+          <p>
+            Lei: precisa, curiosa, capace di trasformare una cena tra amici in un'indagine a tutto campo.
+            Lui: calmo, ironico, l'unico che riesce a farla ridere anche nel mezzo di una discussione.
+            Insieme formano una redazione di due persone — e da oggi, anche una famiglia.
+          </p>
+        </div>
+      </div>
+
+      <div class="article">
+        <p class="kicker">When</p>
+        <h2 class="headline">Sabato 10 ottobre, ore 16:00</h2>
+        <div class="body"><p>Segnatevelo in agenda. O meglio: timbratelo.</p></div>
+        <div class="datestamp" aria-hidden="true">
+          <span class="big">10 · 10 · 2026</span>
+          <span class="small">Sabato — ore 16:00</span>
+        </div>
+        <div>
+          <button type="button" class="toggle" id="cal-btn">Aggiungi al calendario</button>
+        </div>
+        <p class="ticker" id="countdown" aria-live="polite"></p>
+      </div>
+
+      <div class="article">
+        <p class="kicker kicker--special">Inserto speciale</p>
+        <h2 class="headline">E poi? Il viaggio di nozze</h2>
+        <div class="body"><p>Dove andremo dopo la festa è, per ora, una notizia sotto embargo.</p></div>
+        <button class="stamp" aria-expanded="false" aria-controls="panel-luna" data-toggle="panel-luna">
+          Embargo — fino al 10.10.2026
+          <small>anteprima riservata</small>
+        </button>
+        <div id="panel-luna" class="reveal inset">
+          <!-- ✏️ Inserite qui la destinazione vera (o lasciatela "fantasiosa") e l'IBAN -->
+          <p><strong>Comunicato stampa — sotto embargo</strong></p>
+          <p>
+            Destinazione: ancora in fase di valutazione. Le ipotesi sul tavolo della redazione includono
+            un'isola, una capitale che inizia per una lettera ancora da svelare, e una baita che probabilmente
+            non vedremo mai per ragioni di budget.
+          </p>
+          <p>Se volete contribuire a scrivere la prossima puntata, potete farlo qui:</p>
+          <p><strong>IBAN:</strong> da inserire — intestato a Giorgia &amp; Francesco</p>
+          <p><em>Ogni contributo sarà trattato con la massima riservatezza giornalistica. E con immensa gratitudine.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: Dove + Perché -->
+    <div class="col">
+      <div class="article">
+        <p class="kicker">Where</p>
+        <h2 class="headline">Fabriano, Cattedrale di San Venanzio</h2>
+        <div class="body">
+          <p>
+            La cerimonia si terrà nella chiesa madre della città, in Piazza Giovanni Paolo II. Le prime notizie
+            su questo edificio risalgono al 1047; la facciata e gli interni che vedremo sabato sono il frutto di
+            una ricostruzione completata nel 1617, su progetto dell'architetto Muzio Oddi.
+          </p>
+        </div>
+        <button class="toggle" aria-expanded="false" aria-controls="panel-fabriano" data-toggle="panel-fabriano">
+          Scopri Fabriano
+        </button>
+        <div id="panel-fabriano" class="reveal inset">
+          <p>
+            Fabriano è nota in tutta Italia come la "città della carta": da secoli il suo nome compare sui
+            quaderni e sui blocchi da disegno di chi va a scuola — probabilmente anche sui vostri.
+          </p>
+          <p>
+            Dentro la Cattedrale, tra affreschi del Trecento di Allegretto Nuzi e tele del Seicento di Orazio
+            Gentileschi, riposa anche un cittadino piuttosto eccentrico — di cui parliamo nell'inserto dedicato
+            a "Il Marchese del Grillo".
+          </p>
+        </div>
+      </div>
+
+      <div class="article">
+        <p class="kicker">Why</p>
+        <h2 class="headline">Le ragioni di una data</h2>
+        <div class="body">
+          <p>
+            Perché proprio il 10 ottobre? Le nostre fonti, che chiedono di restare anonime, per il momento non
+            rilasciano dichiarazioni.
+          </p>
+        </div>
+        <button class="stamp" aria-expanded="false" aria-controls="panel-perche" data-toggle="panel-perche">
+          Fascicolo riservato
+          <small>versione non ufficiale</small>
+        </button>
+        <div id="panel-perche" class="reveal inset">
+          <!-- ✏️ Se volete, sostituite questi punti con il vero motivo della data -->
+          <p><em>Regola di Chatham House: il contenuto è citabile, le fonti no.</em></p>
+          <p>Tra le ipotesi raccolte dalla nostra redazione:</p>
+          <p>— Perché 10/10 è, da che si ricordi, un voto pieno.</p>
+          <p>— Perché il giorno prima e il giorno dopo erano già occupati — da altri matrimoni, sia chiaro.</p>
+          <p>— Perché la luce di ottobre, in Cattedrale, è quella giusta per le fotografie. E a due redattori, diciamolo, piace un buon scatto.</p>
+          <p><em>La redazione non confermerà né smentirà nessuna di queste ipotesi.</em></p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= HOTEL BAND ================= -->
+  <section class="hotelband fade-in">
+    <p class="kicker kicker--special">Annunci</p>
+    <h2 class="headline" style="font-size:1.7rem;">Siamo felici di ospitarvi</h2>
+    <div class="body"><p>Per chi arriva da fuori, qualche indirizzo comodo per pernottare a Fabriano, a pochi minuti dalla Cattedrale.</p></div>
+    <!-- ✏️ Verificate nomi/contatti e aggiungete numero di telefono o link di prenotazione -->
+    <div class="hotels">
+      <div class="hotel">
+        <h3>Residenza La Ceramica</h3>
+        <p>Boutique hotel nel centro storico, a pochi passi dalla Cattedrale.</p>
+        <p class="meta">Prenotazioni: da inserire</p>
+      </div>
+      <div class="hotel">
+        <h3>La Portella</h3>
+        <p>Camere accoglienti nel cuore della città, con servizio navetta dalla stazione.</p>
+        <p class="meta">Prenotazioni: da inserire</p>
+      </div>
+      <div class="hotel">
+        <h3>Villa Marchese del Grillo</h3>
+        <p>La stessa villa della festa: per chi non vuole proprio andarsene, alcune camere sono disponibili in loco.</p>
+        <p class="meta">Prenotazioni: da inserire</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer fade-in">
+    The Wedding Post — Edizione Straordinaria<br>
+    Fabriano, 10 ottobre 2026<br>
+    Direzione: Giorgia &amp; Francesco<br>
+    Si ringraziano i lettori per l'attenzione — e per essere venuti
+  </footer>
+
+</div>
+</div>
+
+<script>
+  var SITE_PASSWORD = 'gio+fra';
+  var STORAGE_KEY = 'corriere-del-si-unlocked';
+
+  function initSite(){
+    var faders = document.querySelectorAll('.fade-in');
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries, obs){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      faders.forEach(function(el){ observer.observe(el); });
+    } else {
+      faders.forEach(function(el){ el.classList.add('is-visible'); });
+    }
+
+    document.querySelectorAll('[data-toggle]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var panel = document.getElementById(btn.getAttribute('data-toggle'));
+        var open = panel.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open);
+      });
+    });
+
+    var calBtn = document.getElementById('cal-btn');
+    if (calBtn) {
+      calBtn.addEventListener('click', function(){
+        var ua = navigator.userAgent || '';
+        var isAndroid = /Android/i.test(ua);
+        var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        if (isAndroid) {
+          var gcalUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Matrimonio+di+Giorgia+%26+Francesco&dates=20261010T140000Z/20261010T160000Z&location=Piazza+Giovanni+Paolo+II%2C+Fabriano&details=Cattedrale+di+San+Venanzio';
+          window.open(gcalUrl, '_blank', 'noopener');
+          return;
+        }
+
+        var icsPath = '/matrimonio.ics';
+        var icsAbsoluteUrl = window.location.origin + icsPath;
+
+        if (isIOS) {
+          var webcalUrl = icsAbsoluteUrl.replace(/^https?:\/\//, 'webcal://');
+          window.location.href = webcalUrl;
+          return;
+        }
+
+        // Desktop (Mac/Windows/Linux): try opening the hosted ICS directly,
+        // which most browsers hand straight to the default calendar app.
+        if (window.location.protocol !== 'file:') {
+          window.location.href = icsAbsoluteUrl;
+          return;
+        }
+
+        // Fallback for local/file preview where /matrimonio.ics isn't servable:
+        // generate the ICS on the fly as a download.
+        var icsLines = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'PRODID:-//The Wedding Post//Matrimonio//IT',
+          'CALSCALE:GREGORIAN',
+          'BEGIN:VEVENT',
+          'UID:giorgia-francesco-10102026@corrieredelsi',
+          'DTSTAMP:20260101T000000Z',
+          'DTSTART:20261010T140000Z',
+          'DTEND:20261010T160000Z',
+          'SUMMARY:Matrimonio di Giorgia & Francesco',
+          'DESCRIPTION:Cattedrale di San Venanzio',
+          'LOCATION:Piazza Giovanni Paolo II\\, Fabriano',
+          'END:VEVENT',
+          'END:VCALENDAR'
+        ];
+        var icsContent = icsLines.join('\r\n');
+        var blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+        var blobUrl = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'matrimonio-giorgia-francesco.ics';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(function(){ URL.revokeObjectURL(blobUrl); }, 1000);
+      });
+    }
+
+    var el = document.getElementById('countdown');
+    if (el) {
+      var target = new Date('2026-10-10T16:00:00+02:00');
+      var diffDays = Math.ceil((target - new Date()) / 86400000);
+      if (diffDays > 1) {
+        el.innerHTML = 'T meno <strong>' + diffDays + ' giorni</strong> alla notizia del secolo.';
+      } else if (diffDays === 1) {
+        el.innerHTML = '<strong>Domani.</strong> Preparatevi.';
+      } else if (diffDays === 0) {
+        el.innerHTML = '<strong>È oggi.</strong> Buona fortuna a tutti.';
+      } else {
+        el.innerHTML = 'La notizia, ormai, è storia.';
+      }
+    }
+  }
+
+  function unlockSite(){
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('site-content').style.display = 'block';
+    initSite();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+      unlockSite();
+    }
+  } catch(e) {}
+
+  document.getElementById('gate-form').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var input = document.getElementById('gate-password');
+    var errorEl = document.getElementById('gate-error');
+    if (input.value === SITE_PASSWORD) {
+      try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch(e) {}
+      unlockSite();
+    } else {
+      errorEl.textContent = 'Parola d\'ordine non corretta. Riprova.';
+      input.value = '';
+      input.focus();
+    }
+  });
+</script>
+</body>
+</html>
