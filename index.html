@@ -111,9 +111,48 @@
   .col:last-child{padding-right:0;}
   .col + .col{border-left:1px solid var(--rule);}
   @media (max-width:880px){
-    .broadsheet{grid-template-columns:1fr; }
-    .col{padding:0 !important; border-left:0 !important;}
-    .col + .col{border-top:3px solid var(--ink); margin-top:1.75rem; padding-top:1.75rem !important;}
+    .broadsheet{
+      display:flex; flex-direction:column; gap:0; align-items:flex-start;
+    }
+    /* All direct flex children fill full width */
+    .broadsheet > *, .broadsheet .article, .broadsheet .photo-placeholder{ width:100%; }
+    .col{
+      display:contents;
+      padding:0 !important; border-left:0 !important;
+    }
+    /* Every article: reset desktop bottom border/spacing, use top border + consistent padding */
+    .broadsheet .article{
+      margin-bottom:0; padding-bottom:1.75rem; border-bottom:0;
+      border-top:1px solid var(--rule);
+      padding-top:1.75rem;
+      margin-top:0;
+    }
+    /* Fix kicker — inline-block so it doesn't stretch full width */
+    .broadsheet .kicker{ display:inline-block; width:auto; }
+    /* photo placeholder: space above (border-top) and below */
+    .broadsheet .photo-placeholder{
+      border-top:1px solid var(--rule);
+      padding-top:1.75rem;
+      padding-bottom:1.75rem;
+    }
+    /* byline: add bottom space before photo */
+    .broadsheet .byline{ margin-bottom:.9rem; }
+    /* col-what: first item — no top border, no extra top padding */
+    #col-what{ order:1; }
+    /* But the photo inside col-what still gets its top rule */
+    #col-what > .photo-placeholder{
+      border-top:1px solid var(--rule);
+      padding-bottom:0; /* caption already has its own padding */
+    }
+    /* Thin line before annunci on mobile only */
+    .hotelband{ border-top:1px solid var(--rule) !important; }
+    /* Mobile order */
+    #art-who      { order:2; }
+    #art-when     { order:3; }
+    #art-where    { order:4; }
+    #art-marchese { order:5; }
+    #art-why      { order:6; }
+    #art-luna     { order:7; }
   }
 
   .kicker{
@@ -386,7 +425,7 @@
   <section class="broadsheet fade-in">
 
     <!-- Lead column -->
-    <div class="col">
+    <div class="col" id="col-what">
       <p class="kicker">What</p>
       <h2 class="headline--banner">Ci sposiamo.</h2>
       <p class="deck">
@@ -398,36 +437,16 @@
       </p>
       <p class="byline">— a cura della redazione (loro due)</p>
 
-      <!-- ✏️ PHOTO: replace img.jpg with updated image if needed -->
+      <!-- ✏️ PHOTO: replace img.webp with updated image if needed -->
       <div class="photo-placeholder">
         <img src="img.webp" alt="Giorgia e Francesco" style="width:100%; display:block; border:1px solid var(--rule);">
         <p class="photo-caption">Giorgia &amp; Francesco — foto di famiglia</p>
       </div>
-
-      <div class="article" style="margin-top:1.6rem; border-top:1px solid var(--rule); padding-top:1.6rem;">
-        <p class="kicker kicker--special">Inserto speciale</p>
-        <h2 class="headline" style="font-size:1.3rem;">Il Marchese del Grillo</h2>
-        <p class="dek">— ovvero: dove si continua a far festa</p>
-        <div class="body">
-          <p>
-            A pochi chilometri dalla Cattedrale, tra le colline fabrianesi, si trova Villa Marchese del Grillo:
-            una residenza di campagna fatta costruire nel 1771 dal vero Onofrio del Grillo — fabrianese, nato
-            nel 1714, lo stesso a cui il celebre film con Alberto Sordi deve il nome.
-          </p>
-          <p class="pullquote">"Il marchese è sepolto proprio nella Cattedrale di San Venanzio."</p>
-          <p>
-            Per una coincidenza che a un cronista non poteva passare inosservata: la cerimonia si svolgerà a due
-            passi da lui. Sarà nei giardini secolari della sua villa che la festa continuerà, fino a tarda notte.
-          </p>
-        </div>
-        <!-- ✏️ Aggiungete indirizzo, orario di inizio e indicazioni stradali -->
-        <p class="ticker">Indirizzo e orari: <em>da confermare</em></p>
-      </div>
     </div>
 
-    <!-- Middle column: Chi + Embargo -->
-    <div class="col">
-      <div class="article">
+    <!-- Middle column -->
+    <div class="col" id="col-mid">
+      <div class="article" id="art-who">
         <p class="kicker">Who</p>
         <h2 class="headline">Giorgia &amp; Francesco</h2>
         <!-- ✏️ Personalizzate questa presentazione come volete -->
@@ -440,7 +459,7 @@
         </div>
       </div>
 
-      <div class="article">
+      <div class="article" id="art-when">
         <p class="kicker">When</p>
         <h2 class="headline">Sabato 10 ottobre, ore 16:00</h2>
         <div class="body"><p>Segnatevelo in agenda. O meglio: timbratelo.</p></div>
@@ -454,7 +473,7 @@
         <p class="ticker" id="countdown" aria-live="polite"></p>
       </div>
 
-      <div class="article">
+      <div class="article" id="art-luna">
         <p class="kicker kicker--special">Inserto speciale</p>
         <h2 class="headline">E poi? Il viaggio di nozze</h2>
         <div class="body"><p>Dove andremo dopo la festa è, per ora, una notizia sotto embargo.</p></div>
@@ -477,9 +496,9 @@
       </div>
     </div>
 
-    <!-- Right column: Dove + Perché -->
-    <div class="col">
-      <div class="article">
+    <!-- Right column -->
+    <div class="col" id="col-right">
+      <div class="article" id="art-where">
         <p class="kicker">Where</p>
         <h2 class="headline">Fabriano, Cattedrale di San Venanzio</h2>
         <div class="body">
@@ -505,7 +524,7 @@
         </div>
       </div>
 
-      <div class="article">
+      <div class="article" id="art-why">
         <p class="kicker">Why</p>
         <h2 class="headline">Le ragioni di una data</h2>
         <div class="body">
@@ -527,6 +546,21 @@
           <p>— Perché la luce di ottobre, in Cattedrale, è quella giusta per le fotografie. E a due redattori, diciamolo, piace un buon scatto.</p>
           <p><em>La redazione non confermerà né smentirà nessuna di queste ipotesi.</em></p>
         </div>
+      </div>
+
+      <div class="article" id="art-marchese">
+        <p class="kicker kicker--special">Inserto speciale</p>
+        <h2 class="headline">Il Marchese del Grillo</h2>
+        <p class="dek">— ovvero: dove si continua a far festa</p>
+        <div class="body">
+          <p>
+            A pochi chilometri dalla Cattedrale, tra le colline fabrianesi, si trova Villa Marchese del Grillo:
+            una residenza di campagna fatta costruire nel 1771 dal vero Onofrio del Grillo — fabrianese, nato
+            nel 1714, lo stesso a cui il celebre film con Alberto Sordi deve il nome.
+          </p>
+        </div>
+        <!-- ✏️ Aggiungete indirizzo, orario di inizio e indicazioni stradali -->
+        <p class="ticker">Indirizzo e orari: <em>da confermare</em></p>
       </div>
     </div>
 
