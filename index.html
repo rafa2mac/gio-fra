@@ -103,27 +103,28 @@
   .hero{margin-top:1.5rem;}
   .hero .headline--banner{text-align:center; margin:0 0 1.4rem;}
 
-  /* ---------- 5W square buttons ---------- */
+  /* ---------- 5W rectangle buttons ---------- */
   .w-menu{margin-top:2rem;}
   .w-tiles{
     display:flex;
     gap:.8rem;
+    margin-top:1.5rem;
   }
   .w-tile{
     flex:1;
     min-width:0;
-    aspect-ratio:1/1;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:.3rem;
+    display:flex; flex-direction:row; align-items:center; justify-content:center;
+    gap:.6rem;
     background:none; color:var(--ink);
     border:2px solid var(--ink);
+    padding:1.1rem .5rem;
     cursor:pointer;
     transition:background .2s ease, color .2s ease;
   }
   .w-tile .w-letter{
     font-family:'Big Shoulders Display',sans-serif;
-    font-weight:900; line-height:.85;
-    font-size:clamp(2.2rem, 4vw, 3.2rem);
+    font-weight:900; line-height:.8;
+    font-size:1.9rem;
     color:var(--stamp);
   }
   .w-tile .w-word{
@@ -136,7 +137,6 @@
 
   .w-panel{
     display:none;
-    max-width:700px;
     border-top:3px solid var(--ink);
     margin-top:1.75rem;
     padding-top:1.75rem;
@@ -150,6 +150,7 @@
     .w-menu{margin-top:1.5rem;}
     .page{padding-bottom:6rem;}
     .w-tiles{
+      margin-top:0;
       position:fixed; left:0; right:0; bottom:0;
       z-index:100;
       background:var(--paper);
@@ -158,6 +159,7 @@
       padding:.4rem .4rem calc(.4rem + env(safe-area-inset-bottom));
     }
     .w-tile{
+      flex-direction:column;
       aspect-ratio:auto;
       border:none;
       border-right:1px solid var(--rule);
@@ -296,6 +298,10 @@
 
   /* ---------- Photo placeholder ---------- */
   .photo-placeholder{margin:1.2rem 0 0;}
+  .hero-photo{ object-fit:cover; }
+  @media (min-width:701px){
+    .hero-photo{ aspect-ratio:16/7; height:auto; }
+  }
   .photo-hatch{
     width:100%; aspect-ratio:4/3;
     border:1px solid var(--rule);
@@ -437,30 +443,32 @@
     <hr class="rule-double">
   </header>
 
-  <!-- ================= HERO: headline + photo (always visible) ================= -->
+  <!-- Tile bar: sits above hero on desktop (top menu), fixed to bottom on mobile via media query. Placed outside any fade-in/transformed ancestor so position:fixed anchors to the real viewport. -->
+  <div class="w-tiles">
+    <button class="w-tile" type="button" data-w-toggle="w-who" aria-expanded="false" aria-controls="w-who"><span class="w-letter">W</span><span class="w-word">Who</span></button>
+    <button class="w-tile" type="button" data-w-toggle="w-what" aria-expanded="false" aria-controls="w-what"><span class="w-letter">W</span><span class="w-word">What</span></button>
+    <button class="w-tile" type="button" data-w-toggle="w-where" aria-expanded="false" aria-controls="w-where"><span class="w-letter">W</span><span class="w-word">Where</span></button>
+    <button class="w-tile" type="button" data-w-toggle="w-when" aria-expanded="false" aria-controls="w-when"><span class="w-letter">W</span><span class="w-word">When</span></button>
+    <button class="w-tile" type="button" data-w-toggle="w-why" aria-expanded="false" aria-controls="w-why"><span class="w-letter">W</span><span class="w-word">Why</span></button>
+  </div>
+
+  <!-- ================= HERO: headline (always visible) ================= -->
   <section class="hero fade-in">
     <h2 class="headline--banner">Ci sposiamo.</h2>
-    <!-- ✏️ PHOTO: replace img.webp with updated image if needed -->
-    <div class="photo-placeholder">
-      <img src="img.webp" alt="Giorgia e Francesco" style="width:100%; display:block; border:1px solid var(--rule);">
-      <p class="photo-caption">Giorgia &amp; Francesco — foto di famiglia</p>
-    </div>
   </section>
 
   <!-- ================= 5W CLICK-TO-REVEAL MENU ================= -->
   <section class="w-menu fade-in">
-    <div class="w-tiles">
-      <button class="w-tile" type="button" data-w-toggle="w-who" aria-expanded="false" aria-controls="w-who"><span class="w-letter">W</span><span class="w-word">Who</span></button>
-      <button class="w-tile" type="button" data-w-toggle="w-what" aria-expanded="false" aria-controls="w-what"><span class="w-letter">W</span><span class="w-word">What</span></button>
-      <button class="w-tile" type="button" data-w-toggle="w-where" aria-expanded="false" aria-controls="w-where"><span class="w-letter">W</span><span class="w-word">Where</span></button>
-      <button class="w-tile" type="button" data-w-toggle="w-when" aria-expanded="false" aria-controls="w-when"><span class="w-letter">W</span><span class="w-word">When</span></button>
-      <button class="w-tile" type="button" data-w-toggle="w-why" aria-expanded="false" aria-controls="w-why"><span class="w-letter">W</span><span class="w-word">Why</span></button>
-    </div>
 
     <!-- WHO -->
     <div id="w-who" class="w-panel">
       <p class="kicker">Who</p>
       <h2 class="headline">Giorgia &amp; Francesco</h2>
+      <!-- ✏️ PHOTO: replace img.webp with updated image if needed -->
+      <div class="photo-placeholder">
+        <img src="img.webp" alt="Giorgia e Francesco" class="hero-photo" style="width:100%; display:block; border:1px solid var(--rule);">
+        <p class="photo-caption">Giorgia &amp; Francesco — foto di famiglia</p>
+      </div>
       <div class="body">
         <p>
           Ad unirli l'amore sfrenato per il lavoro. Entrambi giornalisti — o almeno questo vantano nei
