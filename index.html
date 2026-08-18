@@ -432,40 +432,19 @@
     .hotel + .hotel{border-left:0; border-top:1px solid var(--rule); margin-top:1.2rem; padding-top:1.2rem !important;}
   }
 
-  /* ---------- Sticky re-appearing CTA ---------- */
-  /* The outer .sticky-cta is fixed but carries NO background-color — Safari 26's
-     toolbar-tinting algorithm samples fixed/sticky elements directly but explicitly
-     ignores their absolutely-positioned children, so the red lives on .sticky-cta-inner
-     instead. This stops the phone's browser chrome from turning solid red. */
-  .sticky-cta{
-    position:fixed; left:0; right:0; bottom:0;
-    z-index:150;
-    background:transparent;
-    border:0;
+  /* ---------- Quick actions: sticky at top on mobile once scrolled ---------- */
+  @media (max-width:880px){
+    .quick-actions{
+      position:sticky; top:0;
+      z-index:120;
+      background:var(--paper);
+      padding-top:.5rem; padding-bottom:.5rem;
+      transition:box-shadow .2s ease;
+    }
+    .quick-actions.is-stuck{
+      box-shadow:0 4px 10px rgba(26,26,25,.15);
+    }
   }
-  .sticky-cta-inner{
-    position:absolute; left:0; right:0; bottom:0;
-    background:var(--stamp);
-    padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
-    transform:translateY(100%);
-    transition:transform .3s ease;
-  }
-  .sticky-cta.is-visible .sticky-cta-inner{transform:translateY(0);}
-  .sticky-cta-btn{
-    display:block; width:100%;
-    max-width:var(--max-w); margin:0 auto;
-    text-align:center;
-    font-family:'Big Shoulders Text',sans-serif;
-    font-weight:800; text-transform:uppercase; letter-spacing:.06em;
-    font-size:1.05rem;
-    background:transparent; border:none; color:var(--paper);
-    border-radius:999px;
-    padding:.85rem 1rem;
-    cursor:pointer;
-    transition:background .2s ease, color .2s ease;
-  }
-  .sticky-cta-btn:hover{background:var(--paper); color:var(--stamp);}
-  .sticky-cta-btn:focus-visible{outline:2px solid var(--ink); outline-offset:2px;}
 
   /* ---------- Footer ---------- */
   .footer{
@@ -538,6 +517,70 @@
     font-family:'Courier Prime',monospace; font-size:.64rem; letter-spacing:.1em;
     text-transform:uppercase; color:var(--ink-soft); margin:2rem 0 0;
   }
+
+  /* ---------- RSVP form ---------- */
+  .rsvp-form{margin-top:1.4rem;}
+  .rsvp-label{
+    display:block; font-family:'Courier Prime',monospace; font-size:.68rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft);
+    margin:1rem 0 .45rem;
+  }
+  .rsvp-label:first-child{margin-top:0;}
+  .rsvp-required{color:var(--stamp);}
+  .rsvp-input{
+    width:100%; font-family:'PT Serif', Georgia, serif; font-size:1rem;
+    background:var(--paper-2); border:1px solid var(--ink); color:var(--ink);
+    padding:.7rem .85rem; box-sizing:border-box;
+    -webkit-appearance:none; appearance:none; border-radius:0;
+  }
+  .rsvp-input:focus{outline:2px solid var(--stamp); outline-offset:2px;}
+  .rsvp-input:disabled{
+    background:var(--paper); color:var(--ink-soft);
+    border-color:var(--rule); cursor:not-allowed;
+  }
+  .rsvp-row{display:flex; gap:.7rem;}
+  .rsvp-row .rsvp-input{margin:0;}
+  .rsvp-row input[type="number"]{flex:0 0 5.2rem; text-align:center;}
+  .rsvp-row input[type="text"]{flex:1; min-width:0;}
+  @media (max-width:400px){
+    .rsvp-row input[type="number"]{flex-basis:4.4rem;}
+  }
+  .rsvp-textarea{resize:vertical; font-family:'PT Serif', Georgia, serif;}
+  .rsvp-checkbox-row{
+    display:flex; align-items:center; gap:.6rem;
+    margin-top:1.2rem;
+  }
+  .rsvp-checkbox{
+    width:1.15rem; height:1.15rem;
+    accent-color:var(--stamp);
+    cursor:pointer; flex-shrink:0;
+  }
+  .rsvp-checkbox-label{
+    font-family:'Courier Prime',monospace; font-size:.78rem;
+    letter-spacing:.02em; color:var(--ink);
+    cursor:pointer;
+  }
+  .rsvp-allergie-wrap{display:none; margin-top:1rem;}
+  .rsvp-allergie-wrap.is-open{display:block; animation:revealIn .25s ease;}
+  .rsvp-submit{
+    margin-top:1.4rem; width:100%;
+    font-family:'Courier Prime',monospace; font-size:.95rem;
+    letter-spacing:.08em; text-transform:uppercase;
+    background:none; color:var(--ink);
+    border:1px solid var(--ink); border-radius:0;
+    padding:1rem 1rem .8rem; cursor:pointer;
+    line-height:1; box-sizing:border-box;
+    -webkit-appearance:none; appearance:none;
+    transition:background .2s ease, color .2s ease;
+  }
+  .rsvp-submit:hover{background:var(--ink); color:var(--paper);}
+  .rsvp-submit:disabled{opacity:.6; cursor:default;}
+  .rsvp-status{
+    font-family:'Courier Prime',monospace; font-size:.72rem; letter-spacing:.04em;
+    margin:.9rem 0 0; min-height:1em;
+  }
+  .rsvp-status.is-success{color:var(--stamp);}
+  .rsvp-status.is-error{color:var(--stamp);}
 </style>
 </head>
 <body>
@@ -568,6 +611,9 @@
     </div>
     <hr class="rule-double">
   </header>
+
+  <!-- Sentinel: when this scrolls out of view, the quick-actions bar below it is stuck to the top -->
+  <div id="qa-sentinel" style="height:1px;"></div>
 
   <!-- ================= QUICK ACTIONS ================= -->
   <section class="quick-actions fade-in">
@@ -706,11 +752,32 @@
     <button type="button" class="modal-close" data-modal-close aria-label="Chiudi">&times;</button>
     <p class="kicker">Ci sarò</p>
     <h2 class="headline">Confermate la vostra presenza</h2>
-    <div class="body">
-      <p>Fateci sapere se ci sarete — bastano due righe.</p>
-    </div>
-    <!-- ✏️ Sostituire href="#" con il link reale (modulo RSVP) quando pronto -->
-    <a class="toggle" href="#">Conferma qui</a>
+
+    <form id="rsvp-form" class="rsvp-form" action="https://formspree.io/f/meajppwv" method="POST">
+      <label class="rsvp-label" for="rsvp-nome">Nome <span class="rsvp-required">*</span></label>
+      <input class="rsvp-input" type="text" id="rsvp-nome" name="Nome" required autocomplete="given-name">
+
+      <label class="rsvp-label" for="rsvp-cognome">Cognome <span class="rsvp-required">*</span></label>
+      <input class="rsvp-input" type="text" id="rsvp-cognome" name="Cognome" required autocomplete="family-name">
+
+      <label class="rsvp-label" for="rsvp-totale">Quante persone, te incluso <span class="rsvp-required">*</span></label>
+      <div class="rsvp-row">
+        <input class="rsvp-input" type="number" id="rsvp-totale" name="Totale persone (te incluso/a)" min="1" max="20" step="1" value="1" required inputmode="numeric">
+        <input class="rsvp-input" type="text" id="rsvp-compagni" name="Chi viene con te" disabled required placeholder="—">
+      </div>
+
+      <div class="rsvp-checkbox-row">
+        <input type="checkbox" id="rsvp-allergie-toggle" class="rsvp-checkbox">
+        <label for="rsvp-allergie-toggle" class="rsvp-checkbox-label">Ho allergie o intolleranze da segnalare</label>
+      </div>
+      <div class="rsvp-allergie-wrap" id="rsvp-allergie-wrap">
+        <label class="rsvp-label" for="rsvp-allergie">Allergie o intolleranze <span class="rsvp-required" id="rsvp-allergie-star" style="display:none;">*</span></label>
+        <textarea class="rsvp-input rsvp-textarea" id="rsvp-allergie" name="Allergie o intolleranze" rows="3" placeholder="Scrivi qui..."></textarea>
+      </div>
+
+      <button type="submit" class="rsvp-submit" id="rsvp-submit">Conferma</button>
+      <p class="rsvp-status" id="rsvp-status" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </div>
 
@@ -783,13 +850,6 @@
   </div>
 </div>
 
-<!-- Sticky re-appearing CTA — sits outside any fade-in/transformed ancestor so position:fixed anchors to the real viewport -->
-<div class="sticky-cta" id="sticky-cta">
-  <div class="sticky-cta-inner">
-    <button type="button" class="sticky-cta-btn" data-modal-open="modal-rsvp">Ci sarò</button>
-  </div>
-</div>
-
 </div>
 
 
@@ -852,6 +912,96 @@
       }
     });
 
+    // RSVP: allergie field hidden until the checkbox is ticked
+    var allergieToggle = document.getElementById('rsvp-allergie-toggle');
+    var allergieWrap = document.getElementById('rsvp-allergie-wrap');
+    var allergieTextarea = document.getElementById('rsvp-allergie');
+    var allergieStar = document.getElementById('rsvp-allergie-star');
+    if (allergieToggle && allergieWrap && allergieTextarea) {
+      allergieToggle.addEventListener('change', function(){
+        if (allergieToggle.checked) {
+          allergieWrap.classList.add('is-open');
+          allergieTextarea.required = true;
+          if (allergieStar) allergieStar.style.display = 'inline';
+        } else {
+          allergieWrap.classList.remove('is-open');
+          allergieTextarea.required = false;
+          allergieTextarea.value = '';
+          if (allergieStar) allergieStar.style.display = 'none';
+        }
+      });
+    }
+
+    // RSVP: names field enables and updates its placeholder based on the total headcount
+    var rsvpTotale = document.getElementById('rsvp-totale');
+    var rsvpCompagni = document.getElementById('rsvp-compagni');
+    if (rsvpTotale && rsvpCompagni) {
+      function updateCompanionField(){
+        var val = parseInt(rsvpTotale.value, 10);
+        if (!val || val <= 1) {
+          rsvpCompagni.disabled = true;
+          rsvpCompagni.required = false;
+          rsvpCompagni.value = '';
+          rsvpCompagni.placeholder = '—';
+        } else if (val === 2) {
+          rsvpCompagni.disabled = false;
+          rsvpCompagni.required = true;
+          rsvpCompagni.placeholder = 'Nome della persona che porti';
+        } else {
+          rsvpCompagni.disabled = false;
+          rsvpCompagni.required = true;
+          rsvpCompagni.placeholder = 'Nomi delle persone che porti, separati da virgola';
+        }
+      }
+      rsvpTotale.addEventListener('input', updateCompanionField);
+      updateCompanionField();
+    }
+
+    // RSVP form — submits to Formspree via fetch so the modal never navigates away
+    var rsvpForm = document.getElementById('rsvp-form');
+    if (rsvpForm) {
+      rsvpForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        var submitBtn = document.getElementById('rsvp-submit');
+        var status = document.getElementById('rsvp-status');
+        status.classList.remove('is-success', 'is-error');
+        status.textContent = 'Invio in corso…';
+        submitBtn.disabled = true;
+
+        fetch(rsvpForm.action, {
+          method: 'POST',
+          body: new FormData(rsvpForm),
+          headers: { 'Accept': 'application/json' }
+        }).then(function(response){
+          if (response.ok) {
+            status.textContent = 'Grazie! La vostra conferma è stata inviata.';
+            status.classList.add('is-success');
+            rsvpForm.reset();
+            if (typeof updateCompanionField === 'function') updateCompanionField();
+            if (allergieWrap) allergieWrap.classList.remove('is-open');
+            if (allergieTextarea) allergieTextarea.required = false;
+            if (allergieStar) allergieStar.style.display = 'none';
+          } else {
+            response.json().then(function(data){
+              var msg = (data && data.errors && data.errors.length)
+                ? data.errors.map(function(er){ return er.message; }).join(', ')
+                : 'Qualcosa è andato storto. Riprovate o scriveteci direttamente.';
+              status.textContent = msg;
+              status.classList.add('is-error');
+            }).catch(function(){
+              status.textContent = 'Qualcosa è andato storto. Riprovate o scriveteci direttamente.';
+              status.classList.add('is-error');
+            });
+          }
+        }).catch(function(){
+          status.textContent = 'Connessione non riuscita. Controllate la rete e riprovate.';
+          status.classList.add('is-error');
+        }).finally(function(){
+          submitBtn.disabled = false;
+        });
+      });
+    }
+
     // IBAN copy-to-clipboard
     var ibanBtn = document.getElementById('iban-copy-btn');
     if (ibanBtn) {
@@ -888,24 +1038,16 @@
       });
     }
 
-    // Sticky "Ci sarò" bar: appears once the quick-action tiles scroll out of view above
-    var quickActionsEl = document.querySelector('.quick-actions');
-    var stickyCta = document.getElementById('sticky-cta');
-    if (quickActionsEl && stickyCta && 'IntersectionObserver' in window) {
-      var stickyObserver = new IntersectionObserver(function(entries){
+    // Quick-actions sticky header: add a shadow once it's actually stuck to the top
+    var qaSentinel = document.getElementById('qa-sentinel');
+    var qaBar = document.querySelector('.quick-actions');
+    if (qaSentinel && qaBar && 'IntersectionObserver' in window) {
+      var qaObserver = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
-          if (entry.isIntersecting) {
-            stickyCta.classList.remove('is-visible');
-          } else if (entry.boundingClientRect.top < 0) {
-            // tiles have scrolled above the viewport
-            stickyCta.classList.add('is-visible');
-          } else {
-            // tiles are still below the viewport (haven't reached them yet)
-            stickyCta.classList.remove('is-visible');
-          }
+          qaBar.classList.toggle('is-stuck', !entry.isIntersecting);
         });
       }, { threshold: 0 });
-      stickyObserver.observe(quickActionsEl);
+      qaObserver.observe(qaSentinel);
     }
 
     var calBtn = document.getElementById('cal-btn');
