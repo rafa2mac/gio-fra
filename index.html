@@ -119,7 +119,7 @@
     -webkit-appearance:none; appearance:none;
     transition:background .2s ease, color .2s ease;
   }
-  .qa-emoji{font-size:2rem; line-height:1;}
+  .qa-emoji{font-size:2.5rem; line-height:1;}
   .qa-label{
     font-family:'Courier Prime',monospace;
     font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
@@ -129,7 +129,7 @@
   @media (max-width:600px){
     .quick-actions{gap:.5rem;}
     .qa-btn{padding:.85rem .3rem;}
-    .qa-emoji{font-size:1.5rem;}
+    .qa-emoji{font-size:1.9rem;}
     .qa-label{font-size:.6rem;}
   }
 
@@ -249,8 +249,14 @@
     font-family:'Courier Prime',monospace;
     font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
     background:none; border:1px solid var(--ink); color:var(--ink);
-    padding:.45rem .8rem; cursor:pointer; border-radius:0;
-    display:inline-block; text-decoration:none; margin-right:.5rem; margin-top:.2rem;
+    padding:.5rem .8rem .4rem; cursor:pointer; border-radius:0;
+    display:inline-flex; align-items:center; justify-content:center;
+    text-decoration:none; margin-right:.5rem;
+    margin-top:1rem;
+    line-height:1;
+    box-sizing:border-box;
+    vertical-align:top;
+    -webkit-appearance:none; appearance:none;
   }
   .toggle:hover, .toggle[aria-expanded="true"]{background:var(--ink); color:var(--paper);}
   .toggle:focus-visible{outline:2px solid var(--stamp); outline-offset:3px;}
@@ -330,17 +336,18 @@
     display:none;
     position:fixed; inset:0;
     z-index:300;
-    background:rgba(26,26,25,.6);
+    background:rgba(15,15,14,.82);
     padding:1.5rem;
-    align-items:center; justify-content:center;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
   }
-  .modal-overlay.is-open{display:flex;}
+  .modal-overlay.is-open{display:block;}
   .modal-box{
     position:relative;
     background:var(--paper);
-    border:2px solid var(--ink);
+    border-radius:4px;
     max-width:600px; width:100%;
-    max-height:85vh; overflow-y:auto;
+    margin:2rem auto;
     padding:2.25rem 1.85rem 1.85rem;
     animation:revealIn .25s ease;
   }
@@ -356,7 +363,7 @@
   }
   .modal-close:hover{background:var(--ink); color:var(--paper);}
   @media (max-width:600px){
-    .modal-box{padding:2rem 1.3rem 1.5rem;}
+    .modal-box{padding:2rem 1.3rem 1.5rem; margin:1rem auto;}
   }
 
   /* ---------- Hotels ---------- */
@@ -470,7 +477,6 @@
       <button type="submit" class="gate-submit">Entra in redazione</button>
       <p class="gate-error" id="gate-error" aria-live="polite"></p>
     </form>
-    <p class="gate-foot">Accesso consentito solo ai lettori invitati</p>
   </div>
 </div>
 
@@ -502,7 +508,8 @@
       <span class="qa-label">Festa</span>
     </button>
     <button type="button" class="qa-btn" data-modal-open="modal-regalo">
-      <span class="qa-emoji">🎁</span>
+      <span class="qa-emoji">🏝️</span>
+      <span class="qa-label">Viaggio</span>
     </button>
   </section>
 
@@ -512,7 +519,6 @@
     <!-- Lead column -->
     <div class="col" id="col-what">
       <p class="kicker">What</p>
-      <h2 class="headline--banner">Ci sposiamo.</h2>
       <p class="deck">
         Scoop. Esclusiva. Si sposano. Chi l'avrebbe detto. Un'estate fa l'incontro. Lui non sapeva chi
         fosse lei, mai vista un'edizione del tg. Quell'orario poi, per chi è in chiusura di giornale, è
@@ -598,7 +604,6 @@
 
       <div class="article" id="art-why">
         <p class="kicker">Why</p>
-        <h2 class="headline">Le ragioni di una data</h2>
         <div class="body">
           <p>
             Perché proprio il 10 ottobre? Mettiamola così: why not?
@@ -613,8 +618,7 @@
   <footer class="footer fade-in">
     The Wedding Post — Edizione Straordinaria<br>
     Fabriano, 10 ottobre 2026<br>
-    Direzione: Giorgia &amp; Francesco<br>
-    Si ringraziano i lettori per l'attenzione — e per essere venuti
+    Direzione: Giorgia &amp; Francesco
   </footer>
 
 </div>
@@ -669,14 +673,27 @@
     <div class="photo-placeholder" style="margin-top:1rem;">
       <img src="https://www.marchesedelgrillo.com/images/slider-home/hotel-fabriano.jpg" alt="Villa Marchese del Grillo" style="width:100%; display:block; border:1px solid var(--rule);">
     </div>
-    <!-- ✏️ Contenuto da aggiungere -->
+    <div class="body" style="margin-top:1rem;">
+      <p><em>"Io so' io, e voi non siete un…"</em></p>
+      <p>
+        Cari amici romani, forse non lo sapevate, ma il marchese Onofrio del Grillo è nato a Fabriano.
+      </p>
+      <p>
+        E noi festeggiamo nella sua residenza estiva, villa storica di campagna in cui Monicelli e Sordi
+        girarono alcune scene del celebre film. Un'esperienza da rivivere insieme, e un motivo in più per
+        brindare.
+      </p>
+    </div>
+    <a class="toggle" href="https://maps.app.goo.gl/FvbVvtY1mEpxFQzXA" target="_blank" rel="noopener">
+      Come arrivare
+    </a>
   </div>
 </div>
 
 <div class="modal-overlay" id="modal-regalo">
   <div class="modal-box">
     <button type="button" class="modal-close" data-modal-close aria-label="Chiudi">&times;</button>
-    <p class="kicker">Regalo</p>
+    <p class="kicker">Viaggio</p>
     <h2 class="headline">Il nostro viaggio</h2>
     <div class="body">
       <p>Il sogno è un'isola deserta. Così abbiamo deciso di acquistarla. Per contribuire:</p>
