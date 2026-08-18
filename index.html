@@ -99,78 +99,90 @@
     .title{grid-area:title; white-space:normal; text-align:center; justify-self:stretch;}
   }
 
-  /* ---------- Hero (headline + photo, always visible) ---------- */
-  .hero{margin-top:1.5rem;}
-  .hero .headline--banner{text-align:center; margin:0 0 1.4rem;}
-
-  /* ---------- 5W rectangle buttons ---------- */
-  .w-menu{margin-top:2rem;}
-  .w-tiles{
-    display:flex;
+  /* ---------- Quick actions (4 emoji buttons) ---------- */
+  .quick-actions{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
     gap:.8rem;
-    margin-top:1.5rem;
+    margin-top:1.75rem;
   }
-  .w-tile{
-    flex:1;
-    min-width:0;
-    display:flex; flex-direction:row; align-items:center; justify-content:center;
-    gap:.6rem;
-    background:none; color:var(--ink);
+  .qa-btn{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:.4rem;
     border:2px solid var(--ink);
-    padding:1.1rem .5rem;
+    background:none;
+    padding:1.2rem .5rem;
+    text-decoration:none;
+    color:var(--ink);
     cursor:pointer;
+    font:inherit;
+    -webkit-appearance:none; appearance:none;
     transition:background .2s ease, color .2s ease;
   }
-  .w-tile .w-letter{
-    font-family:'Big Shoulders Display',sans-serif;
-    font-weight:900; line-height:.8;
-    font-size:1.9rem;
-    color:var(--stamp);
-  }
-  .w-tile .w-word{
+  .qa-emoji{font-size:2rem; line-height:1;}
+  .qa-label{
     font-family:'Courier Prime',monospace;
-    font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+    font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
   }
-  .w-tile:hover, .w-tile.is-active{background:var(--ink); color:var(--paper);}
-  .w-tile:hover .w-letter, .w-tile.is-active .w-letter{color:var(--paper);}
-  .w-tile:focus-visible{outline:2px solid var(--stamp); outline-offset:2px;}
-
-  .w-panel{
-    display:none;
-    border-top:3px solid var(--ink);
-    margin-top:1.75rem;
-    padding-top:1.75rem;
+  .qa-btn:hover{background:var(--ink); color:var(--paper);}
+  .qa-btn:focus-visible{outline:2px solid var(--stamp); outline-offset:2px;}
+  @media (max-width:600px){
+    .quick-actions{gap:.5rem;}
+    .qa-btn{padding:.85rem .3rem;}
+    .qa-emoji{font-size:1.5rem;}
+    .qa-label{font-size:.6rem;}
   }
-  .w-panel.is-open{display:block; animation:revealIn .35s ease;}
 
-  .w-subinsert{margin-top:1.6rem; border-top:1px solid var(--rule); padding-top:1.6rem;}
-
-  /* Mobile: sticky app-style bottom bar */
-  @media (max-width:700px){
-    .w-menu{margin-top:1.5rem;}
-    .page{padding-bottom:6rem;}
-    .w-tiles{
+  /* ---------- Broadsheet grid ---------- */
+  .broadsheet{
+    display:grid;
+    grid-template-columns: 1.7fr 1fr 1fr;
+    gap:0;
+    margin-top:1.5rem;
+  }
+  .col{padding:0 1.4rem; min-width:0;}
+  .col:first-child{padding-left:0;}
+  .col:last-child{padding-right:0;}
+  .col + .col{border-left:1px solid var(--rule);}
+  @media (max-width:880px){
+    .broadsheet{
+      display:flex; flex-direction:column; gap:0; align-items:flex-start;
+    }
+    /* All direct flex children fill full width */
+    .broadsheet > *, .broadsheet .article, .broadsheet .photo-placeholder{ width:100%; }
+    .col{
+      display:contents;
+      padding:0 !important; border-left:0 !important;
+    }
+    /* Every article: reset desktop bottom border/spacing, use top border + consistent padding */
+    .broadsheet .article{
+      margin-bottom:0; padding-bottom:1.75rem; border-bottom:0;
+      border-top:1px solid var(--rule);
+      padding-top:1.75rem;
       margin-top:0;
-      position:fixed; left:0; right:0; bottom:0;
-      z-index:100;
-      background:var(--paper);
-      border-top:2px solid var(--ink);
-      gap:0;
-      padding:.4rem .4rem calc(.4rem + env(safe-area-inset-bottom));
     }
-    .w-tile{
-      flex-direction:column;
-      aspect-ratio:auto;
-      border:none;
-      border-right:1px solid var(--rule);
-      gap:.15rem;
-      padding:.5rem .2rem;
+    /* Fix kicker — inline-block so it doesn't stretch full width */
+    .broadsheet .kicker{ display:inline-block; width:auto; }
+    /* photo placeholder: space above (border-top) and below */
+    .broadsheet .photo-placeholder{
+      border-top:1px solid var(--rule);
+      padding-top:1.75rem;
+      padding-bottom:1.75rem;
     }
-    .w-tile .w-letter{font-size:1.3rem;}
-    .w-tile .w-word{font-size:.58rem; letter-spacing:.06em;}
-    .w-tile:last-child{border-right:0;}
-    /* Panels open above the fixed bar, not hidden behind it */
-    .w-panel.is-open{margin-bottom:1.5rem;}
+    /* byline: add bottom space before photo */
+    .broadsheet .byline{ margin-bottom:.9rem; }
+    /* col-what: first item — no top border, no extra top padding */
+    #col-what{ order:1; }
+    /* But the photo inside col-what still gets its top rule */
+    #col-what > .photo-placeholder{
+      border-top:1px solid var(--rule);
+      padding-bottom:0; /* caption already has its own padding */
+    }
+    /* Mobile order */
+    #art-who      { order:2; }
+    #art-where    { order:3; }
+    #art-when     { order:4; }
+    #art-why      { order:5; }
   }
 
   .kicker{
@@ -298,10 +310,6 @@
 
   /* ---------- Photo placeholder ---------- */
   .photo-placeholder{margin:1.2rem 0 0;}
-  .hero-photo{ object-fit:cover; }
-  @media (min-width:701px){
-    .hero-photo{ aspect-ratio:16/7; height:auto; }
-  }
   .photo-hatch{
     width:100%; aspect-ratio:4/3;
     border:1px solid var(--rule);
@@ -317,9 +325,45 @@
     font-style:italic;
   }
 
-  /* ---------- Hotels (own band below the grid) ---------- */
-  .hotelband{margin-top:2.5rem; padding-top:1.75rem; border-top:3px solid var(--ink);}
+  /* ---------- Modals ---------- */
+  .modal-overlay{
+    display:none;
+    position:fixed; inset:0;
+    z-index:300;
+    background:rgba(26,26,25,.6);
+    padding:1.5rem;
+    align-items:center; justify-content:center;
+  }
+  .modal-overlay.is-open{display:flex;}
+  .modal-box{
+    position:relative;
+    background:var(--paper);
+    border:2px solid var(--ink);
+    max-width:600px; width:100%;
+    max-height:85vh; overflow-y:auto;
+    padding:2.25rem 1.85rem 1.85rem;
+    animation:revealIn .25s ease;
+  }
+  .modal-close{
+    position:absolute; top:.7rem; right:.7rem;
+    width:2rem; height:2rem;
+    background:none; border:1px solid var(--ink);
+    font-size:1.3rem; line-height:1;
+    cursor:pointer; color:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:inherit;
+    transition:background .2s ease, color .2s ease;
+  }
+  .modal-close:hover{background:var(--ink); color:var(--paper);}
+  @media (max-width:600px){
+    .modal-box{padding:2rem 1.3rem 1.5rem;}
+  }
+
+  /* ---------- Hotels ---------- */
   .hotels{display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:1.2rem;}
+  .hotels--stacked{display:block;}
+  .hotels--stacked .hotel{padding:0 !important; border-left:0 !important;}
+  .hotels--stacked .hotel + .hotel{border-top:1px solid var(--rule); margin-top:1.2rem; padding-top:1.2rem !important;}
   .hotel{padding:0 1.4rem;}
   .hotel:first-child{padding-left:0;}
   .hotel:last-child{padding-right:0;}
@@ -443,199 +487,161 @@
     <hr class="rule-double">
   </header>
 
-  <!-- Tile bar: sits above hero on desktop (top menu), fixed to bottom on mobile via media query. Placed outside any fade-in/transformed ancestor so position:fixed anchors to the real viewport. -->
-  <div class="w-tiles">
-    <button class="w-tile" type="button" data-w-toggle="w-who" aria-expanded="false" aria-controls="w-who"><span class="w-letter">W</span><span class="w-word">Who</span></button>
-    <button class="w-tile" type="button" data-w-toggle="w-what" aria-expanded="false" aria-controls="w-what"><span class="w-letter">W</span><span class="w-word">What</span></button>
-    <button class="w-tile" type="button" data-w-toggle="w-where" aria-expanded="false" aria-controls="w-where"><span class="w-letter">W</span><span class="w-word">Where</span></button>
-    <button class="w-tile" type="button" data-w-toggle="w-when" aria-expanded="false" aria-controls="w-when"><span class="w-letter">W</span><span class="w-word">When</span></button>
-    <button class="w-tile" type="button" data-w-toggle="w-why" aria-expanded="false" aria-controls="w-why"><span class="w-letter">W</span><span class="w-word">Why</span></button>
-  </div>
-
-  <!-- ================= HERO: headline (always visible) ================= -->
-  <section class="hero fade-in">
-    <h2 class="headline--banner">Ci sposiamo.</h2>
+  <!-- ================= QUICK ACTIONS ================= -->
+  <section class="quick-actions fade-in">
+    <button type="button" class="qa-btn" data-modal-open="modal-rsvp">
+      <span class="qa-emoji">🙌</span>
+      <span class="qa-label">Ci sarò</span>
+    </button>
+    <button type="button" class="qa-btn" data-modal-open="modal-hotel">
+      <span class="qa-emoji">🏨</span>
+      <span class="qa-label">Hotel</span>
+    </button>
+    <button type="button" class="qa-btn" data-modal-open="modal-festa">
+      <span class="qa-emoji">🍸</span>
+      <span class="qa-label">Festa</span>
+    </button>
+    <button type="button" class="qa-btn" data-modal-open="modal-regalo">
+      <span class="qa-emoji">🎁</span>
+    </button>
   </section>
 
-  <!-- ================= 5W CLICK-TO-REVEAL MENU ================= -->
-  <section class="w-menu fade-in">
+  <!-- ================= BROADSHEET GRID: COSA / CHI+QUANDO / DOVE+PERCHÉ ================= -->
+  <section class="broadsheet fade-in">
 
-    <!-- WHO -->
-    <div id="w-who" class="w-panel">
-      <p class="kicker">Who</p>
-      <h2 class="headline">Giorgia &amp; Francesco</h2>
-      <!-- ✏️ PHOTO: replace img.webp with updated image if needed -->
-      <div class="photo-placeholder">
-        <img src="img.webp" alt="Giorgia e Francesco" class="hero-photo" style="width:100%; display:block; border:1px solid var(--rule);">
-        <p class="photo-caption">Giorgia &amp; Francesco — foto di famiglia</p>
-      </div>
-      <div class="body">
-        <p>
-          Ad unirli l'amore sfrenato per il lavoro. Entrambi giornalisti — o almeno questo vantano nei
-          rispettivi cv.
-        </p>
-        <p>
-          <strong>Giorgia</strong> e la passione per la tv, il racconto per immagini, il servizio pubblico
-          e la Rai. La radio, la Formula1, le olimpiadi e da un annetto anche le scale di Sanremo. Da
-          quando ha scoperto l'Africa del Cuamm, punta a visitare tutti gli ospedali e le aree di crisi
-          con il futuro marito. Parola d'ordine malarone. Poi la musica, il cinema, la commedia
-          all'italiana. Morricone, Trovajoli. C'eravamo tanto amati e ci ameremo ancora molto. Eterna
-          romantica.
-        </p>
-        <p>
-          <strong>Francesco</strong> e la carta stampata, la politica, gli esteri. Trascorre le sue
-          giornate tra Montecitorio e Palazzo Chigi. La sua giacca può trasformarsi in un mantello,
-          quello di Batman. Rigorosamente Nolan, ça va sans dire. È infatti solito nascondersi dietro i
-          lussuosi tendaggi del transatlantico o all'uscita di ascensori e toilette sperando di scucire
-          una battuta a premier e ministri. E quindi una polemica, il colloquio, cinquemila battute,
-          pagina tre del giornale. Con un unico obiettivo: salvare Gotham City dalle forze del male. Ma
-          il più delle volte riceve solo sguardi d'ira e vaffanbrodo. Ama le trasferte alla Casa Bianca,
-          la musica trap e Fabri Fibra. Uscirebbe volentieri a cena con Ana de Armas, ma ormai ciao core.
-        </p>
-      </div>
-    </div>
-
-    <!-- WHAT -->
-    <div id="w-what" class="w-panel">
+    <!-- Lead column -->
+    <div class="col" id="col-what">
       <p class="kicker">What</p>
-      <h2 class="headline">Il retroscena</h2>
-      <div class="body">
-        <p>
-          Scoop. Esclusiva. Si sposano. Chi l'avrebbe detto. Un'estate fa l'incontro. Lui non sapeva chi
-          fosse lei, mai vista un'edizione del tg. Quell'orario poi, per chi è in chiusura di giornale, è
-          un inferno. E che dire di lei, vista e followata immediatamente su Instagram. Impossibile
-          lasciarsi sfuggire il giovane favoloso della carta stampata. Ed eccoli qua, dopo un anno e
-          diverse paparazzate su Chi, pronti a promettersi amore eterno.
-        </p>
-      </div>
+      <h2 class="headline--banner">Ci sposiamo.</h2>
+      <p class="deck">
+        Scoop. Esclusiva. Si sposano. Chi l'avrebbe detto. Un'estate fa l'incontro. Lui non sapeva chi
+        fosse lei, mai vista un'edizione del tg. Quell'orario poi, per chi è in chiusura di giornale, è
+        un inferno. E che dire di lei, vista e followata immediatamente su Instagram. Impossibile
+        lasciarsi sfuggire il giovane favoloso della carta stampata. Ed eccoli qua, dopo un anno e
+        diverse paparazzate su Chi, pronti a promettersi amore eterno.
+      </p>
       <p class="ticker">Indiscrezioni dal Messaggero: <em>c'è chi giura che alla redazione politica la tv ora sia sempre sintonizzata su Rai1, ndr</em></p>
       <p class="byline">— a cura della redazione (loro due)</p>
+
+      <!-- ✏️ PHOTO: replace img.webp with updated image if needed -->
+      <div class="photo-placeholder">
+        <img src="img.webp" alt="Giorgia e Francesco" style="width:100%; display:block; border:1px solid var(--rule);">
+        <p class="photo-caption">Giorgia &amp; Francesco — foto di famiglia</p>
+      </div>
     </div>
 
-    <!-- WHERE (+ Marchese del Grillo nested) -->
-    <div id="w-where" class="w-panel">
-      <p class="kicker">Where</p>
-      <h2 class="headline">Fabriano, Cattedrale di San Venanzio</h2>
-      <div class="body">
-        <p>
-          Per la sposa è la sua Itaca, per lo sposo l'unica scelta possibile. Diciamolo subito: chi viene
-          da fuori può comodamente arrivare in auto. Poco più di 200 km da Roma, meno di tre ore di
-          strada. Le nozze si celebreranno nella patria della carta e della filigrana. Sarà capitato
-          anche a voi di incrociare nel vostro cammino prestigiosi album da disegno griffati Fabriano.
-          Ebbene, in questa ridente cittadina di 30mila abitanti c'è molto di più. A cominciare dal
-          salame. E ci sembra decisamente un ottimo inizio.
-        </p>
-      </div>
-      <button class="toggle" aria-expanded="false" aria-controls="panel-fabriano" data-toggle="panel-fabriano">
-        Scopri Fabriano
-      </button>
-      <div id="panel-fabriano" class="reveal inset">
-        <p>
-          La cerimonia si terrà nella Cattedrale di San Venanzio, in Piazza Giovanni Paolo II. Le prime
-          notizie su questo edificio risalgono al 1047; la facciata e gli interni che vedremo sabato sono
-          il frutto di una ricostruzione completata nel 1617, su progetto dell'architetto Muzio Oddi.
-        </p>
-        <p>
-          Fabriano è nota in tutta Italia come la "città della carta": da secoli il suo nome compare sui
-          quaderni e sui blocchi da disegno di chi va a scuola — probabilmente anche sui vostri.
-        </p>
-        <p>
-          Dentro la Cattedrale, tra affreschi del Trecento di Allegretto Nuzi e tele del Seicento di Orazio
-          Gentileschi, riposa anche un cittadino piuttosto eccentrico — di cui parliamo qui sotto, nell'inserto
-          dedicato a "Il Marchese del Grillo".
-        </p>
-      </div>
-
-      <div class="w-subinsert">
-        <p class="kicker kicker--special">Inserto speciale</p>
-        <h3 class="headline" style="font-size:1.2rem;">Il Marchese del Grillo</h3>
-        <p class="dek">— ovvero: dove si continua a far festa</p>
+    <!-- Middle column -->
+    <div class="col" id="col-mid">
+      <div class="article" id="art-who">
+        <p class="kicker">Who</p>
+        <h2 class="headline">Giorgia &amp; Francesco</h2>
         <div class="body">
           <p>
-            A pochi chilometri dalla Cattedrale, tra le colline fabrianesi, si trova Villa Marchese del Grillo:
-            una residenza di campagna fatta costruire nel 1771 dal vero Onofrio del Grillo — fabrianese, nato
-            nel 1714, lo stesso a cui il celebre film con Alberto Sordi deve il nome.
+            Ad unirli l'amore sfrenato per il lavoro. Entrambi giornalisti — o almeno questo vantano nei
+            rispettivi cv.
           </p>
-        </div>
-        <!-- ✏️ Aggiungete indirizzo, orario di inizio e indicazioni stradali -->
-        <p class="ticker">Indirizzo e orari: <em>da confermare</em></p>
-      </div>
-    </div>
-
-    <!-- WHEN (+ honeymoon nested) -->
-    <div id="w-when" class="w-panel">
-      <p class="kicker">When</p>
-      <h2 class="headline">Sabato 10 ottobre, ore 16:00</h2>
-      <div class="body">
-        <p>
-          Finalmente abbiamo la data: il 10 ottobre. E possiamo annunciare ai nostri affezionati lettori
-          di cronache rosa anche l'orario: ore 16, Cattedrale di San Venanzio.
-        </p>
-      </div>
-      <div class="datestamp" aria-hidden="true">
-        <span class="big">10 · 10 · 2026</span>
-        <span class="small">Sabato — ore 16:00</span>
-      </div>
-      <div>
-        <button type="button" class="toggle" id="cal-btn">Aggiungi al calendario</button>
-      </div>
-      <p class="ticker" id="countdown" aria-live="polite"></p>
-
-      <div class="w-subinsert">
-        <p class="kicker kicker--special">Inserto speciale</p>
-        <h3 class="headline" style="font-size:1.2rem;">E poi? Il viaggio di nozze</h3>
-        <div class="body"><p>Dove andremo dopo la festa è, per ora, una notizia sotto embargo.</p></div>
-        <button class="stamp" aria-expanded="false" aria-controls="panel-luna" data-toggle="panel-luna">
-          Embargo — fino al 10.10.2026
-          <small>anteprima riservata</small>
-        </button>
-        <div id="panel-luna" class="reveal inset">
-          <!-- ✏️ Inserite qui la destinazione vera (o lasciatela "fantasiosa") e l'IBAN -->
-          <p><strong>Comunicato stampa — sotto embargo</strong></p>
           <p>
-            Destinazione: ancora in fase di valutazione. Le ipotesi sul tavolo della redazione includono
-            un'isola, una capitale che inizia per una lettera ancora da svelare, e una baita che probabilmente
-            non vedremo mai per ragioni di budget.
+            <strong>Giorgia</strong> e la passione per la tv, il racconto per immagini, il servizio pubblico
+            e la Rai. La radio, la Formula1, le olimpiadi e da un annetto anche le scale di Sanremo. Da
+            quando ha scoperto l'Africa del Cuamm, punta a visitare tutti gli ospedali e le aree di crisi
+            con il futuro marito. Parola d'ordine malarone. Poi la musica, il cinema, la commedia
+            all'italiana. Morricone, Trovajoli. C'eravamo tanto amati e ci ameremo ancora molto. Eterna
+            romantica.
           </p>
-          <p>Se volete contribuire a scrivere la prossima puntata, potete farlo qui:</p>
-          <p><strong>IBAN:</strong> da inserire — intestato a Giorgia &amp; Francesco</p>
-          <p><em>Ogni contributo sarà trattato con la massima riservatezza giornalistica. E con immensa gratitudine.</em></p>
+          <p>
+            <strong>Francesco</strong> e la carta stampata, la politica, gli esteri. Trascorre le sue
+            giornate tra Montecitorio e Palazzo Chigi. La sua giacca può trasformarsi in un mantello,
+            quello di Batman. Rigorosamente Nolan, ça va sans dire. È infatti solito nascondersi dietro i
+            lussuosi tendaggi del transatlantico o all'uscita di ascensori e toilette sperando di scucire
+            una battuta a premier e ministri. E quindi una polemica, il colloquio, cinquemila battute,
+            pagina tre del giornale. Con un unico obiettivo: salvare Gotham City dalle forze del male. Ma
+            il più delle volte riceve solo sguardi d'ira e vaffanbrodo. Ama le trasferte alla Casa Bianca,
+            la musica trap e Fabri Fibra. Uscirebbe volentieri a cena con Ana de Armas, ma ormai ciao core.
+          </p>
         </div>
       </div>
     </div>
 
-    <!-- WHY -->
-    <div id="w-why" class="w-panel">
-      <p class="kicker">Why</p>
-      <h2 class="headline">Le ragioni di una data</h2>
-      <div class="body">
-        <p>
-          Perché proprio il 10 ottobre? Mettiamola così: why not?
-        </p>
+    <!-- Right column -->
+    <div class="col" id="col-right">
+      <div class="article" id="art-where">
+        <p class="kicker">Where</p>
+        <h2 class="headline">Fabriano, Cattedrale di San Venanzio</h2>
+        <div class="body">
+          <p>
+            Per la sposa è la sua Itaca, per lo sposo l'unica scelta possibile. Diciamolo subito: chi viene
+            da fuori può comodamente arrivare in auto. Poco più di 200 km da Roma, meno di tre ore di
+            strada. Le nozze si celebreranno nella patria della carta e della filigrana. Sarà capitato
+            anche a voi di incrociare nel vostro cammino prestigiosi album da disegno griffati Fabriano.
+            Ebbene, in questa ridente cittadina di 30mila abitanti c'è molto di più. A cominciare dal
+            salame. E ci sembra decisamente un ottimo inizio.
+          </p>
+        </div>
+        <a class="toggle" href="https://maps.app.goo.gl/RTxdFnL5mdiyYVHT8" target="_blank" rel="noopener">
+          Come arrivare
+        </a>
       </div>
-      <button class="stamp" aria-expanded="false" aria-controls="panel-perche" data-toggle="panel-perche">
-        Fascicolo riservato
-        <small>versione non ufficiale</small>
-      </button>
-      <div id="panel-perche" class="reveal inset">
-        <!-- ✏️ Se volete, sostituite questi punti con il vero motivo della data -->
-        <p><em>Regola di Chatham House: il contenuto è citabile, le fonti no.</em></p>
-        <p>Tra le ipotesi raccolte dalla nostra redazione:</p>
-        <p>— Perché 10/10 è, da che si ricordi, un voto pieno.</p>
-        <p>— Perché il giorno prima e il giorno dopo erano già occupati — da altri matrimoni, sia chiaro.</p>
-        <p>— Perché la luce di ottobre, in Cattedrale, è quella giusta per le fotografie. E a due redattori, diciamolo, piace un buon scatto.</p>
-        <p><em>La redazione non confermerà né smentirà nessuna di queste ipotesi.</em></p>
+
+      <div class="article" id="art-when">
+        <p class="kicker">When</p>
+        <h2 class="headline">Sabato 10 ottobre, ore 16:00</h2>
+        <div class="body">
+          <p>
+            Finalmente abbiamo la data: il 10 ottobre. E possiamo annunciare ai nostri affezionati lettori
+            di cronache rosa anche l'orario: ore 16, Cattedrale di San Venanzio.
+          </p>
+        </div>
+        <div>
+          <button type="button" class="toggle" id="cal-btn">Aggiungi al calendario</button>
+        </div>
+      </div>
+
+      <div class="article" id="art-why">
+        <p class="kicker">Why</p>
+        <h2 class="headline">Le ragioni di una data</h2>
+        <div class="body">
+          <p>
+            Perché proprio il 10 ottobre? Mettiamola così: why not?
+          </p>
+        </div>
       </div>
     </div>
+
   </section>
 
-  <!-- ================= HOTEL BAND ================= -->
-  <section class="hotelband fade-in">
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer fade-in">
+    The Wedding Post — Edizione Straordinaria<br>
+    Fabriano, 10 ottobre 2026<br>
+    Direzione: Giorgia &amp; Francesco<br>
+    Si ringraziano i lettori per l'attenzione — e per essere venuti
+  </footer>
+
+</div>
+
+<!-- ================= MODALS: sit outside any fade-in/transformed ancestor ================= -->
+
+<div class="modal-overlay" id="modal-rsvp">
+  <div class="modal-box">
+    <button type="button" class="modal-close" data-modal-close aria-label="Chiudi">&times;</button>
+    <p class="kicker">Ci sarò</p>
+    <h2 class="headline">Confermate la vostra presenza</h2>
+    <div class="body">
+      <p>Fateci sapere se ci sarete — bastano due righe.</p>
+    </div>
+    <!-- ✏️ Sostituire href="#" con il link reale (modulo RSVP) quando pronto -->
+    <a class="toggle" href="#">Conferma qui</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-hotel">
+  <div class="modal-box">
+    <button type="button" class="modal-close" data-modal-close aria-label="Chiudi">&times;</button>
     <p class="kicker kicker--special">Annunci</p>
-    <h2 class="headline" style="font-size:1.7rem;">Siamo felici di ospitarvi</h2>
-    <div class="body"><p>Per chi arriva da fuori, qualche indirizzo comodo per pernottare a Fabriano, a pochi minuti dalla Cattedrale.</p></div>
+    <h2 class="headline">Sarete nostri ospiti</h2>
+    <div class="body"><p>Tutti gli hotel che abbiamo riservato sono a pochi passi dalla Cattedrale e a meno di 15 minuti di auto dalla villa del ricevimento.</p></div>
     <!-- ✏️ Verificate nomi/contatti e aggiungete numero di telefono o link di prenotazione -->
-    <div class="hotels">
+    <div class="hotels hotels--stacked">
       <div class="hotel">
         <h3>Residenza La Ceramica</h3>
         <p>Boutique hotel nel centro storico, a pochi passi dalla Cattedrale.</p>
@@ -652,18 +658,36 @@
         <p class="meta">Prenotazioni: da inserire</p>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="footer fade-in">
-    The Wedding Post — Edizione Straordinaria<br>
-    Fabriano, 10 ottobre 2026<br>
-    Direzione: Giorgia &amp; Francesco<br>
-    Si ringraziano i lettori per l'attenzione — e per essere venuti
-  </footer>
+<div class="modal-overlay" id="modal-festa">
+  <div class="modal-box">
+    <button type="button" class="modal-close" data-modal-close aria-label="Chiudi">&times;</button>
+    <p class="kicker kicker--special">Inserto speciale</p>
+    <h2 class="headline">La festa: Marchese del Grillo</h2>
+    <div class="photo-placeholder" style="margin-top:1rem;">
+      <img src="https://www.marchesedelgrillo.com/images/slider-home/hotel-fabriano.jpg" alt="Villa Marchese del Grillo" style="width:100%; display:block; border:1px solid var(--rule);">
+    </div>
+    <!-- ✏️ Contenuto da aggiungere -->
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-regalo">
+  <div class="modal-box">
+    <button type="button" class="modal-close" data-modal-close aria-label="Chiudi">&times;</button>
+    <p class="kicker">Regalo</p>
+    <h2 class="headline">Il nostro viaggio</h2>
+    <div class="body">
+      <p>Il sogno è un'isola deserta. Così abbiamo deciso di acquistarla. Per contribuire:</p>
+    </div>
+    <!-- ✏️ Inserire IBAN reale -->
+    <p class="ticker"><strong>IBAN:</strong> <em>da inserire</em></p>
+  </div>
+</div>
 
 </div>
-</div>
+
 
 <script>
   var SITE_PASSWORD = 'gio+fra';
@@ -693,29 +717,35 @@
       });
     });
 
-    // 5W tab bar: only one panel open at a time
-    var wTiles = document.querySelectorAll('[data-w-toggle]');
-    wTiles.forEach(function(tile){
-      tile.addEventListener('click', function(){
-        var targetPanel = document.getElementById(tile.getAttribute('data-w-toggle'));
-        var alreadyOpen = targetPanel.classList.contains('is-open');
-
-        // Close every panel and deactivate every tab
-        wTiles.forEach(function(t){
-          var p = document.getElementById(t.getAttribute('data-w-toggle'));
-          p.classList.remove('is-open');
-          t.classList.remove('is-active');
-          t.setAttribute('aria-expanded', 'false');
-        });
-
-        // Re-open the clicked one, unless it was already open (acts as a close toggle)
-        if (!alreadyOpen) {
-          targetPanel.classList.add('is-open');
-          tile.classList.add('is-active');
-          tile.setAttribute('aria-expanded', 'true');
-          targetPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Quick-action modals
+    function closeModal(modal){
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('[data-modal-open]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var modal = document.getElementById(btn.getAttribute('data-modal-open'));
+        if (modal) {
+          modal.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
         }
       });
+    });
+    document.querySelectorAll('[data-modal-close]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var modal = btn.closest('.modal-overlay');
+        if (modal) closeModal(modal);
+      });
+    });
+    document.querySelectorAll('.modal-overlay').forEach(function(overlay){
+      overlay.addEventListener('click', function(e){
+        if (e.target === overlay) closeModal(overlay);
+      });
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.is-open').forEach(closeModal);
+      }
     });
 
     var calBtn = document.getElementById('cal-btn');
@@ -776,21 +806,6 @@
         document.body.removeChild(link);
         setTimeout(function(){ URL.revokeObjectURL(blobUrl); }, 1000);
       });
-    }
-
-    var el = document.getElementById('countdown');
-    if (el) {
-      var target = new Date('2026-10-10T16:00:00+02:00');
-      var diffDays = Math.ceil((target - new Date()) / 86400000);
-      if (diffDays > 1) {
-        el.innerHTML = 'T meno <strong>' + diffDays + ' giorni</strong> alla notizia del secolo.';
-      } else if (diffDays === 1) {
-        el.innerHTML = '<strong>Domani.</strong> Preparatevi.';
-      } else if (diffDays === 0) {
-        el.innerHTML = '<strong>È oggi.</strong> Buona fortuna a tutti.';
-      } else {
-        el.innerHTML = 'La notizia, ormai, è storia.';
-      }
     }
   }
 
