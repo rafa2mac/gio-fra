@@ -249,7 +249,7 @@
     font-family:'Courier Prime',monospace;
     font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
     background:none; border:1px solid var(--ink); color:var(--ink);
-    padding:.5rem .8rem .4rem; cursor:pointer; border-radius:0;
+    padding:1rem 1rem .8rem; cursor:pointer; border-radius:0;
     display:inline-flex; align-items:center; justify-content:center;
     text-decoration:none; margin-right:.5rem;
     margin-top:1rem;
@@ -260,6 +260,14 @@
   }
   .toggle:hover, .toggle[aria-expanded="true"]{background:var(--ink); color:var(--paper);}
   .toggle:focus-visible{outline:2px solid var(--stamp); outline-offset:3px;}
+  @media (max-width:880px){
+    .toggle{
+      display:flex; width:100%;
+      margin-right:0;
+      padding:.95rem 1rem .8rem;
+      font-size:.85rem;
+    }
+  }
 
   /* ---------- Inset / reveal panels ---------- */
   .inset{
@@ -366,6 +374,38 @@
     .modal-box{padding:2rem 1.3rem 1.5rem; margin:1rem auto;}
   }
 
+  /* ---------- IBAN copy-to-clipboard ---------- */
+  .iban-copy{
+    display:block; width:100%;
+    background:var(--paper-2); border:1px solid var(--ink);
+    color:var(--ink); text-align:left;
+    padding:.9rem 1rem; margin-top:1rem;
+    cursor:pointer; font-family:inherit;
+    -webkit-appearance:none; appearance:none;
+    transition:background .2s ease, color .2s ease;
+  }
+  .iban-copy:hover, .iban-copy:active{background:var(--ink); color:var(--paper);}
+  .iban-label{
+    display:block;
+    font-family:'Courier Prime',monospace;
+    font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink-soft); margin-bottom:.35rem;
+  }
+  .iban-copy:hover .iban-label, .iban-copy:active .iban-label{color:var(--paper);}
+  .iban-value{
+    display:block;
+    font-family:'Courier Prime',monospace;
+    font-size:1rem; letter-spacing:.03em;
+  }
+  .iban-toast{
+    display:none;
+    font-family:'Courier Prime',monospace;
+    font-size:.72rem; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--stamp); text-align:center;
+    margin:.7rem 0 0;
+  }
+  .iban-toast.is-visible{display:block; animation:revealIn .2s ease;}
+
   /* ---------- Hotels ---------- */
   .hotels{display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:1.2rem;}
   .hotels--stacked{display:block;}
@@ -391,6 +431,32 @@
     .hotel + .hotel{border-left:0; border-top:1px solid var(--rule); margin-top:1.2rem; padding-top:1.2rem !important;}
   }
 
+  /* ---------- Sticky re-appearing CTA ---------- */
+  .sticky-cta{
+    position:fixed; left:0; right:0; bottom:0;
+    z-index:150;
+    background:var(--stamp);
+    padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
+    transform:translateY(100%);
+    transition:transform .3s ease;
+  }
+  .sticky-cta.is-visible{transform:translateY(0);}
+  .sticky-cta-btn{
+    display:block; width:100%;
+    max-width:var(--max-w); margin:0 auto;
+    text-align:center;
+    font-family:'Big Shoulders Text',sans-serif;
+    font-weight:800; text-transform:uppercase; letter-spacing:.06em;
+    font-size:1.05rem;
+    background:transparent; border:none; color:var(--paper);
+    border-radius:999px;
+    padding:.85rem 1rem;
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease;
+  }
+  .sticky-cta-btn:hover{background:var(--paper); color:var(--stamp);}
+  .sticky-cta-btn:focus-visible{outline:2px solid var(--ink); outline-offset:2px;}
+
   /* ---------- Footer ---------- */
   .footer{
     text-align:center; padding-top:2.25rem; margin-top:2.5rem; border-top:1px solid var(--rule);
@@ -407,7 +473,7 @@
   }
 
   @media (max-width:480px){
-    body{font-size:16.5px;}
+    body{font-size:17.5px;}
     .page{padding:0 1.1rem 3rem;}
   }
 
@@ -698,9 +764,18 @@
     <div class="body">
       <p>Il sogno è un'isola deserta. Così abbiamo deciso di acquistarla. Per contribuire:</p>
     </div>
-    <!-- ✏️ Inserire IBAN reale -->
-    <p class="ticker"><strong>IBAN:</strong> <em>da inserire</em></p>
+    <!-- ✏️ Sostituire con l'IBAN reale -->
+    <button type="button" class="iban-copy" id="iban-copy-btn" data-iban="IT60X0542811101000000123456">
+      <span class="iban-label">IBAN — tocca per copiare</span>
+      <span class="iban-value">IT60 X054 2811 1010 0000 0123 456</span>
+    </button>
+    <p class="iban-toast" id="iban-toast" role="status" aria-live="polite">Copiato negli appunti</p>
   </div>
+</div>
+
+<!-- Sticky re-appearing CTA — sits outside any fade-in/transformed ancestor so position:fixed anchors to the real viewport -->
+<div class="sticky-cta" id="sticky-cta">
+  <button type="button" class="sticky-cta-btn" data-modal-open="modal-rsvp">Ci sarò</button>
 </div>
 
 </div>
@@ -764,6 +839,62 @@
         document.querySelectorAll('.modal-overlay.is-open').forEach(closeModal);
       }
     });
+
+    // IBAN copy-to-clipboard
+    var ibanBtn = document.getElementById('iban-copy-btn');
+    if (ibanBtn) {
+      ibanBtn.addEventListener('click', function(){
+        var iban = ibanBtn.getAttribute('data-iban') || '';
+        var toast = document.getElementById('iban-toast');
+        function showToast(){
+          if (!toast) return;
+          toast.classList.add('is-visible');
+          clearTimeout(toast._hideTimer);
+          toast._hideTimer = setTimeout(function(){
+            toast.classList.remove('is-visible');
+          }, 2200);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(iban).then(showToast).catch(function(){
+            fallbackCopy(iban);
+            showToast();
+          });
+        } else {
+          fallbackCopy(iban);
+          showToast();
+        }
+        function fallbackCopy(text){
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch(e) {}
+          document.body.removeChild(ta);
+        }
+      });
+    }
+
+    // Sticky "Ci sarò" bar: appears once the quick-action tiles scroll out of view above
+    var quickActionsEl = document.querySelector('.quick-actions');
+    var stickyCta = document.getElementById('sticky-cta');
+    if (quickActionsEl && stickyCta && 'IntersectionObserver' in window) {
+      var stickyObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            stickyCta.classList.remove('is-visible');
+          } else if (entry.boundingClientRect.top < 0) {
+            // tiles have scrolled above the viewport
+            stickyCta.classList.add('is-visible');
+          } else {
+            // tiles are still below the viewport (haven't reached them yet)
+            stickyCta.classList.remove('is-visible');
+          }
+        });
+      }, { threshold: 0 });
+      stickyObserver.observe(quickActionsEl);
+    }
 
     var calBtn = document.getElementById('cal-btn');
     if (calBtn) {
