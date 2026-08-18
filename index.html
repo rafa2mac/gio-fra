@@ -2,7 +2,8 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F3F3F1">
 <title>The Wedding Post — Giorgia &amp; Francesco</title>
 <meta name="description" content="The Wedding Post — everything you need to know about Giorgia and Francesco's wedding. Fabriano, 10 October 2026.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com">
@@ -432,15 +433,24 @@
   }
 
   /* ---------- Sticky re-appearing CTA ---------- */
+  /* The outer .sticky-cta is fixed but carries NO background-color — Safari 26's
+     toolbar-tinting algorithm samples fixed/sticky elements directly but explicitly
+     ignores their absolutely-positioned children, so the red lives on .sticky-cta-inner
+     instead. This stops the phone's browser chrome from turning solid red. */
   .sticky-cta{
     position:fixed; left:0; right:0; bottom:0;
     z-index:150;
+    background:transparent;
+    border:0;
+  }
+  .sticky-cta-inner{
+    position:absolute; left:0; right:0; bottom:0;
     background:var(--stamp);
     padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
     transform:translateY(100%);
     transition:transform .3s ease;
   }
-  .sticky-cta.is-visible{transform:translateY(0);}
+  .sticky-cta.is-visible .sticky-cta-inner{transform:translateY(0);}
   .sticky-cta-btn{
     display:block; width:100%;
     max-width:var(--max-w); margin:0 auto;
@@ -672,7 +682,7 @@
         <p class="kicker">Why</p>
         <div class="body">
           <p>
-            Perché proprio il 10 ottobre? Mettiamola così: why not?
+            Mettiamola così: why not?
           </p>
         </div>
       </div>
@@ -775,7 +785,9 @@
 
 <!-- Sticky re-appearing CTA — sits outside any fade-in/transformed ancestor so position:fixed anchors to the real viewport -->
 <div class="sticky-cta" id="sticky-cta">
-  <button type="button" class="sticky-cta-btn" data-modal-open="modal-rsvp">Ci sarò</button>
+  <div class="sticky-cta-inner">
+    <button type="button" class="sticky-cta-btn" data-modal-open="modal-rsvp">Ci sarò</button>
+  </div>
 </div>
 
 </div>
