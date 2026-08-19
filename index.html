@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#F3F3F1">
 <title>The Wedding Post — Giorgia &amp; Francesco</title>
 <meta name="description" content="The Wedding Post — everything you need to know about Giorgia and Francesco's wedding. Fabriano, 10 October 2026.">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Big+Shoulders+Text:wght@600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -108,11 +108,11 @@
     margin-top:1.75rem;
   }
   .qa-btn{
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:.4rem;
+    display:flex; flex-direction:row; align-items:center; justify-content:center;
+    gap:.8rem;
     border:2px solid var(--ink);
     background:none;
-    padding:1.2rem .5rem;
+    padding:1.3rem .7rem;
     text-decoration:none;
     color:var(--ink);
     cursor:pointer;
@@ -120,18 +120,25 @@
     -webkit-appearance:none; appearance:none;
     transition:background .2s ease, color .2s ease;
   }
-  .qa-emoji{font-size:2.5rem; line-height:1;}
+  .qa-emoji{line-height:1; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .qa-emoji-img{
+    width:3.1rem; height:3.1rem;
+    display:block;
+    object-fit:contain;
+    transition:filter .2s ease;
+  }
+  .qa-btn:hover .qa-emoji-img, .qa-btn.is-active .qa-emoji-img{filter:invert(1);}
   .qa-label{
     font-family:'Courier Prime',monospace;
-    font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+    font-size:.88rem; letter-spacing:.08em; text-transform:uppercase;
   }
   .qa-btn:hover{background:var(--ink); color:var(--paper);}
   .qa-btn:focus-visible{outline:2px solid var(--stamp); outline-offset:2px;}
-  @media (max-width:600px){
+  @media (max-width:880px){
     .quick-actions{gap:.5rem;}
-    .qa-btn{padding:.85rem .3rem;}
-    .qa-emoji{font-size:1.9rem;}
-    .qa-label{font-size:.6rem;}
+    .qa-btn{flex-direction:column; gap:.55rem; padding:1.1rem .3rem;}
+    .qa-emoji-img{width:2.9rem; height:2.9rem;}
+    .qa-label{font-size:.82rem;}
   }
 
   /* ---------- Broadsheet grid ---------- */
@@ -163,7 +170,7 @@
       margin-top:0;
     }
     /* Fix kicker — inline-block so it doesn't stretch full width */
-    .broadsheet .kicker{ display:inline-block; width:auto; }
+    .broadsheet .kicker{ display:inline-block; width:auto; font-size:1.15rem; padding:.4rem .85rem; }
     /* photo placeholder: space above (border-top) and below */
     .broadsheet .photo-placeholder{
       border-top:1px solid var(--rule);
@@ -189,9 +196,9 @@
   .kicker{
     display:inline-block;
     font-family:'Courier Prime',monospace;
-    font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;
+    font-size:.92rem; letter-spacing:.12em; text-transform:uppercase;
     background:var(--ink); color:var(--paper);
-    padding:.32rem .65rem; margin:0 0 .7rem;
+    padding:.36rem .7rem; margin:0 0 .7rem;
   }
   .kicker--special{background:var(--stamp); color:var(--paper-2);}
 
@@ -335,7 +342,6 @@
   .photo-caption{
     font-family:'Courier Prime',monospace; font-size:.68rem;
     letter-spacing:.04em; color:var(--ink-soft);
-    border-top:1px solid var(--rule);
     margin:.4rem 0 0; padding-top:.35rem;
     font-style:italic;
   }
@@ -618,19 +624,19 @@
   <!-- ================= QUICK ACTIONS ================= -->
   <section class="quick-actions fade-in">
     <button type="button" class="qa-btn" data-modal-open="modal-rsvp">
-      <span class="qa-emoji">🙌</span>
+      <span class="qa-emoji"><img src="images/icon-ci-saro.png" alt="" class="qa-emoji-img"></span>
       <span class="qa-label">Ci sarò</span>
     </button>
     <button type="button" class="qa-btn" data-modal-open="modal-hotel">
-      <span class="qa-emoji">🏨</span>
+      <span class="qa-emoji"><img src="images/icon-hotel.png" alt="" class="qa-emoji-img"></span>
       <span class="qa-label">Hotel</span>
     </button>
     <button type="button" class="qa-btn" data-modal-open="modal-festa">
-      <span class="qa-emoji">🍸</span>
+      <span class="qa-emoji"><img src="images/icon-festa.png" alt="" class="qa-emoji-img"></span>
       <span class="qa-label">Festa</span>
     </button>
     <button type="button" class="qa-btn" data-modal-open="modal-regalo">
-      <span class="qa-emoji">🏝️</span>
+      <span class="qa-emoji"><img src="images/icon-viaggio.png" alt="" class="qa-emoji-img"></span>
       <span class="qa-label">Viaggio</span>
     </button>
   </section>
@@ -653,7 +659,7 @@
 
       <!-- ✏️ PHOTO: replace img.webp with updated image if needed -->
       <div class="photo-placeholder">
-        <img src="img.webp" alt="Giorgia e Francesco" style="width:100%; display:block; border:1px solid var(--rule);">
+        <img src="images/img.webp" alt="Giorgia e Francesco" style="width:100%; display:block; border:1px solid var(--rule);">
         <p class="photo-caption">Giorgia &amp; Francesco — foto di famiglia</p>
       </div>
     </div>
@@ -814,7 +820,7 @@
     <p class="kicker kicker--special">Inserto speciale</p>
     <h2 class="headline">La festa: Marchese del Grillo</h2>
     <div class="photo-placeholder" style="margin-top:1rem;">
-      <img src="https://www.marchesedelgrillo.com/images/slider-home/hotel-fabriano.jpg" alt="Villa Marchese del Grillo" style="width:100%; display:block; border:1px solid var(--rule);">
+      <img src="images/hotel-fabriano.jpg" alt="Villa Marchese del Grillo" style="width:100%; display:block; border:1px solid var(--rule);">
     </div>
     <div class="body" style="margin-top:1rem;">
       <p><em>"Io so' io, e voi non siete un…"</em></p>
