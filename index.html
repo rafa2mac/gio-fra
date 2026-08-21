@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wedding Post — In arrivo</title>
+<meta name="description" content="Giorgia &amp; Francesco si sposano — 10 ottobre 2026. Il sito è in arrivo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=PT+Serif:ital,wght@0,400;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F3F1;
+    --ink:#1A1A19;
+    --ink-soft:#5A5A57;
+    --stamp:#BE2D2D;
+    --rule:#CDCDC9;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:1.5rem;
+  }
+  .wrap{
+    max-width:520px; width:100%;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family:'Courier Prime',monospace; font-size:.72rem;
+    letter-spacing:.2em; text-transform:uppercase;
+    color:var(--ink-soft); margin:0 0 1rem;
+  }
+  .rule{border:0; border-top:3px solid var(--ink); border-bottom:1px solid var(--ink); height:0; margin:0 0 1.75rem;}
+  .title{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:900; text-transform:uppercase;
+    font-size:clamp(2.2rem, 8vw, 3.4rem);
+    line-height:.95; letter-spacing:-.01em;
+    margin:0 0 1.5rem;
+  }
+  .headline{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:900; text-transform:uppercase;
+    font-size:clamp(2.6rem, 11vw, 4.6rem);
+    line-height:.92; letter-spacing:-.01em;
+    color:var(--stamp);
+    margin:0 0 1.25rem;
+  }
+  .sub{
+    font-size:1.1rem; line-height:1.6;
+    margin:0 0 1.75rem;
+  }
+  .datestamp{
+    display:inline-flex; flex-direction:column; align-items:center; gap:.25rem;
+    border:3px double var(--stamp); color:var(--stamp);
+    padding:.9rem 1.6rem;
+  }
+  .datestamp .big{
+    font-family:'Courier Prime',monospace; font-weight:700;
+    font-size:1.15rem; letter-spacing:.08em;
+  }
+  .datestamp .small{
+    font-family:'Courier Prime',monospace; font-size:.62rem;
+    letter-spacing:.2em; text-transform:uppercase;
+  }
+  .foot{
+    margin-top:2.5rem;
+    font-family:'Courier Prime',monospace; font-size:.68rem;
+    letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="eyebrow">Edizione straordinaria</p>
+    <h1 class="title">The Wedding Post</h1>
+    <hr class="rule">
+    <p class="eyebrow" style="margin-bottom:.6rem;">In arrivo</p>
+    <h2 class="headline">Presto<br>in edicola.</h2>
+    <p class="sub">Giorgia &amp; Francesco si sposano.<br>Il giornale è in fase di stampa — tornate a trovarci presto.</p>
+    <div class="datestamp">
+      <span class="big">10 · 10 · 2026</span>
+      <span class="small">Fabriano</span>
+    </div>
+    <p class="foot">The Wedding Post — Direzione: Giorgia &amp; Francesco</p>
+  </div>
+</body>
+</html>
