@@ -471,6 +471,14 @@
   }
   .hotel-links{display:flex; flex-wrap:wrap; gap:.6rem;}
   .hotel-links .toggle{margin:0;}
+  @media (max-width:880px){
+    .hotel-links{width:100%; flex-wrap:nowrap; gap:.5rem;}
+    .hotel-links .toggle{
+      flex:1 1 0; width:auto; min-width:0;
+      padding-left:.4rem; padding-right:.4rem;
+      font-size:.88rem; letter-spacing:.02em;
+    }
+  }
 
   /* ---------- Quick actions: sticky at top on mobile once scrolled ---------- */
   @media (max-width:880px){
