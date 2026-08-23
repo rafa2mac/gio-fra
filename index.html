@@ -59,7 +59,7 @@
     padding:1rem 0;
   }
   .masthead-side{
-    font-family:'Courier Prime',monospace; font-size:.62rem; letter-spacing:.1em;
+    font-family:'Courier Prime',monospace; font-size:.74rem; letter-spacing:.1em;
     text-transform:uppercase; color:var(--ink-soft); line-height:1.7;
   }
   .masthead-side.right{text-align:right;}
@@ -68,7 +68,7 @@
     font-weight:900;
     text-transform:uppercase;
     font-size:clamp(2.4rem, 6vw, 4.4rem);
-    line-height:.9;
+    line-height:1;
     letter-spacing:-.01em;
     margin:0;
     text-align:center;
@@ -103,7 +103,7 @@
     .masthead-side.right .mh-l2{grid-area:r2; text-align:right; justify-self:end;}
     .masthead-side br{display:none;}
     .mh-l1, .mh-l2{
-      font-family:'Courier Prime',monospace; font-size:.6rem; letter-spacing:.1em;
+      font-family:'Courier Prime',monospace; font-size:.7rem; letter-spacing:.1em;
       text-transform:uppercase; color:var(--ink-soft); line-height:1.5;
     }
     .masthead-row::before{
@@ -113,7 +113,7 @@
       border-bottom:1px solid var(--ink);
       margin:.45rem 0 .6rem;
     }
-    .title{grid-area:title; white-space:normal; text-align:center; justify-self:stretch;}
+    .title{grid-area:title; white-space:normal; text-align:center; justify-self:stretch; margin-top:.4rem;}
   }
 
   /* ---------- Quick actions (4 emoji buttons) ---------- */
@@ -486,6 +486,7 @@
       position:sticky; top:0;
       z-index:120;
       background:var(--paper);
+      margin-top:.9rem;
       padding-top:.5rem; padding-bottom:.5rem;
       transition:box-shadow .2s ease;
     }
