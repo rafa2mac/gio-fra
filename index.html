@@ -197,17 +197,21 @@
       padding-top:1.75rem;
       padding-bottom:1.75rem;
     }
-    /* byline: add bottom space before photo */
-    .broadsheet .byline{ margin-bottom:.9rem; }
+    /* byline: normalized to match the standard 1.75rem gap before every divider */
+    .broadsheet .byline{ margin-bottom:0; }
+    /* Photo caption: breathing room from the photo above (mobile only) */
+    .photo-caption{ margin-top:.9rem; padding-top:.55rem; }
     /* col-what: first item — no top border, no extra top padding */
     #col-what{ order:1; }
-    /* But the photo inside col-what still gets its top rule */
+    /* Photo: standard 1.75rem gap before its top divider (matches byline margin-bottom:0 above),
+       and standard 1.75rem gap after the caption before the WHO divider */
     #col-what > .photo-placeholder{
       border-top:1px solid var(--rule);
-      padding-bottom:0; /* caption already has its own padding */
+      margin-top:1.75rem;
+      padding-bottom:1.75rem;
     }
     /* Mobile order */
-    #art-who      { order:2; }
+    #art-who      { order:2; padding-bottom:1.75rem; }
     #art-where    { order:3; }
     #art-when     { order:4; }
     #art-why      { order:5; }
@@ -723,7 +727,7 @@
           </p>
           <p>
             <strong>Giorgia</strong> e la passione per la tv, il racconto per immagini, il servizio pubblico
-            e la Rai. La radio, la Formula1, le olimpiadi e da un annetto anche le scale di Sanremo. Da
+            e la Rai. La radio, la Formula1, le Olimpiadi e da un annetto anche le scale di Sanremo. Da
             quando ha scoperto l'Africa del Cuamm, vuole visitare tutti gli ospedali e le aree di crisi
             con il futuro marito. Parola d'ordine: Malarone. Poi la musica, il cinema, la commedia
             all'italiana. Morricone, Trovajoli. C'eravamo tanto amati e ci ameremo ancora molto. Eterna
